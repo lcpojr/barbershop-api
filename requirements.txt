@@ -1,0 +1,11 @@
+# Application
+Django==2.1.5
+djangorestframework==3.9.0
+
+# Authentication
+django-allauth
+django-oauth-toolkit
+django-cors-middleware
+
+# Database
+psycopg2-binary
