@@ -1,3 +1,6 @@
+# Envs
+/virtualenv/*
+
 # Pycache
 apps/*/__pycache__/
 configs/*/__pycache__/
