@@ -37,14 +37,18 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # Oauth
-    'oauth2_provider', 
+    'oauth2_provider',
+    'corsheaders',
 
     # Social Auth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.google'
+    'allauth.socialaccount.providers.google',
+
+    # Custom apps
+    'apps.authx'
 ]
 
 REST_FRAMEWORK = {
@@ -67,8 +71,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'configs.router'
 
