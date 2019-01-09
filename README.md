@@ -31,5 +31,5 @@ You can get all the documentation on docs folder.
 We use some tools to ensure our code quality.
 
 - `pylint`
-- `django-pylint`
+- `django-lint`
 - `pytest`
