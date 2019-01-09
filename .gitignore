@@ -6,3 +6,4 @@ configs/*/__pycache__/
 # Lib static files
 /static/admin/*
 /static/rest_framework/*
+/static/facebook/*
