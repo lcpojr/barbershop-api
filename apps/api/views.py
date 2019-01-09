@@ -22,12 +22,12 @@ class CreatePerson(APIView):
             person = create_person(serializer.data)
 
             if 'addresses' in serializer.data:
-                for address in serializer.data.addresses:
-                    person.address.add(create_address(address))
+                for address in serializer.data['addresses']:
+                    create_address(person, address)
 
             if 'phones' in serializer.data:
-                for phone in serializer.data.phones:
-                    person.phones.add(create_phone(phone))
+                for phone in serializer.data['phones']:
+                    create_phone(person, phone)
 
             person.save()
 

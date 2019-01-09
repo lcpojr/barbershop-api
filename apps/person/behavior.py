@@ -30,11 +30,12 @@ def create_user(data):
 
     return user
 
-def create_address(data):
+def create_address(person, data):
     """
     Creates a new `Address`
     """
     address = Address()
+    address.person = person
     address.country = data['country']
     address.uf = data['uf']
     address.city = data['city']
@@ -49,11 +50,12 @@ def create_address(data):
 
     return address
 
-def create_phone(data):
+def create_phone(person, data):
     """
     Creates a new `Phone`
     """
     phone = Phone()
+    phone.person = person
     phone.code = data['code']
     phone.ddd = data['ddd']
     phone.number = data['number']

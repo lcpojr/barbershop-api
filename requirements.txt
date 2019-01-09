@@ -9,3 +9,8 @@ django-cors-middleware
 
 # Database
 psycopg2-binary
+
+# Code Quality
+pylint
+pylint-django
+pytest

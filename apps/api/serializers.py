@@ -4,12 +4,12 @@ from apps.person.models import Person, Address, Phone
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        exclude = ('country', 'uf', 'city', 'street', 'neighborhood', 'number', 'reference', 'zipcode', 'latitude', 'longitude')
+        fields = ('country', 'uf', 'city', 'street', 'neighborhood', 'number', 'reference', 'zipcode', 'latitude', 'longitude')
 
 class PhoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Phone
-        exclude = ('code', 'ddd', 'number')
+        fields = ('code', 'ddd', 'number')
 
 class PersonSerializer(serializers.ModelSerializer):
     # User Fields
