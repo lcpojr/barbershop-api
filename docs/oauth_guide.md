@@ -3,6 +3,17 @@
 To use oauth you will need to create an application config.
 You can create in django admin or using the enpoint (Only in develop).
 
+**You will create an user before to create the application**
+
+## Creating a superuser
+
+To create a superuser you will need to do:
+
+- Run the server with `docker-compose up -d`;
+- Use `python manage.py create_superuser`;
+- Type the data requested;
+- Login on django admin;
+
 ## Creating by admin
 
 To create an application using admin we should have a superuser account.
@@ -33,9 +44,9 @@ You can get a token by doing a request to `/api/v1/auth/token/` with the paramet
 
 ```sh
 curl http://localhost:8000/api/v1/auth/token/ \
--d 'client_id=PtHjmOspcoqCBgUIU6iGATLrqEvlDlSgfmuC8GIM' \
--d 'client_secret=2pB7gmg6LqKSswBZzx2126V4qNT6dysIIbA7qkdRTFFbvs7ZSw26HbmM5ZZnDRFo8wGxssEWRXPYbFU1bItUvLJx2gVU5ShWyqlZVKZ2amxIBGH1ajCJvy25oVbP0iDM' \
--d 'username=i3l' \
--d 'password=admini3l' \
+-d 'client_id=aQ5C3IBulnLjuwCeDtJCNjrHxnBXAX9Z6hZeIpa7' \
+-d 'client_secret=UyVZuWRISEnRHCiND8KmGGiSetZsVzHtLlpgi4NqZS8VCbTaVPu4K91UjGfMp7kfusN2yvtQVZCM5Ls53UsG45fuQTs9QPZFzuoW483Gm0dsrkX55KOvMrSwk6NeKu04' \
+-d 'username=i3l@admin.com' \
+-d 'password=i3ladmin@123' \
 -d 'grant_type=password'
 ```

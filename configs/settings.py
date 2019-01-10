@@ -74,8 +74,6 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
-
 ROOT_URLCONF = 'configs.router'
 
 TEMPLATES = [
@@ -111,6 +109,8 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT'),
     }
 }
+
+AUTH_USER_MODEL = 'authx.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -167,3 +167,5 @@ OAUTH2_PROVIDER = {
         'promotion:read': 'Can see a promotion',
     }
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
