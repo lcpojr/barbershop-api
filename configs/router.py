@@ -11,5 +11,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Oauth2
-    path('api/v1/auth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    path('api/v1/auth/', include(('apps.authx.urls', 'authx'), namespace='auth')),
 ]
