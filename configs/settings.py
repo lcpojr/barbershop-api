@@ -37,14 +37,18 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # Oauth
-    'oauth2_provider', 
+    'oauth2_provider',
+    'corsheaders',
 
     # Social Auth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.google'
+    'allauth.socialaccount.providers.google',
+
+    # Custom apps
+    'apps.authx'
 ]
 
 REST_FRAMEWORK = {
@@ -67,8 +71,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
-
 
 ROOT_URLCONF = 'configs.router'
 
@@ -105,6 +109,8 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT'),
     }
 }
+
+AUTH_USER_MODEL = 'authx.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -145,3 +151,21 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# Oauth2 provider
+# https://django-oauth-toolkit.readthedocs.io/en/latest/settings.html
+OAUTH2_PROVIDER = {
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 3600, # 1 Hour
+    'SCOPES': {
+        'profile:read': 'Can see a profile',
+        'profile:write': 'Can edit a profile',
+        'cart:add': 'Can add itens to the shopping cart',
+        'cart:remove': 'Can remove itens from the shopping cart',
+        'sale:close': 'Can close the sale',
+        'product:read': 'Can see a product',
+        'service:read': 'Can see a service',
+        'promotion:read': 'Can see a promotion',
+    }
+}
+
+CORS_ORIGIN_ALLOW_ALL = True
