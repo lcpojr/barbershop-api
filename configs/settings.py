@@ -151,3 +151,19 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# Oauth2 provider
+# https://django-oauth-toolkit.readthedocs.io/en/latest/settings.html
+OAUTH2_PROVIDER = {
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 3600, # 1 Hour
+    'SCOPES': {
+        'profile:read': 'Can see a profile',
+        'profile:write': 'Can edit a profile',
+        'cart:add': 'Can add itens to the shopping cart',
+        'cart:remove': 'Can remove itens from the shopping cart',
+        'sale:close': 'Can close the sale',
+        'product:read': 'Can see a product',
+        'service:read': 'Can see a service',
+        'promotion:read': 'Can see a promotion',
+    }
+}
