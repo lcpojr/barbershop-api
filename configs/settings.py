@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 
     # Custom apps
-    'apps.authx'
+    'apps.authx',
+    'apps.profiles'
 ]
 
 REST_FRAMEWORK = {

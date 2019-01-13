@@ -30,6 +30,11 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser):
+    """
+    This model contains the user data.
+    Its a custom user model that extends of django abstract user.
+    """
+
     email = models.EmailField(unique=True)
     date_joined = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True)
