@@ -29,7 +29,7 @@ You can create a superuser to access admin painel and other things, you just nee
 - Install [python 3.x](https://www.python.org/downloads/);
 - Install python-pip using `apt-get install python-pip`;
 - Install the dependencies using `pip install -r requirements.txt`;
-- Create the user using `python manage.py create_superuser`;
+- Create the user using `python manage.py createsuperuser`;
 
 ### Documentation
 
