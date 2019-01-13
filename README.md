@@ -22,6 +22,15 @@ Frist you should install the docker and docker-compose applications (links on re
 
 * The server will run on `localhost:8000`
 
+#### Creating a superuser
+
+You can create a superuser to access admin painel and other things, you just need to run:
+
+- Install [python 3.x](https://www.python.org/downloads/);
+- Install python-pip using `apt-get install python-pip`;
+- Install the dependencies using `pip install -r requirements.txt`;
+- Create the user using `python manage.py create_superuser`;
+
 ### Documentation
 
 You can get all the documentation on docs folder.
