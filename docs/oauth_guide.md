@@ -43,9 +43,9 @@ You can get a token by doing a request to `/api/v1/auth/token/` with the paramet
 **Exemple:**
 
 ```sh
-curl http://localhost:8000/api/v1/auth/token/ \
--d 'client_id=aQ5C3IBulnLjuwCeDtJCNjrHxnBXAX9Z6hZeIpa7' \
--d 'client_secret=UyVZuWRISEnRHCiND8KmGGiSetZsVzHtLlpgi4NqZS8VCbTaVPu4K91UjGfMp7kfusN2yvtQVZCM5Ls53UsG45fuQTs9QPZFzuoW483Gm0dsrkX55KOvMrSwk6NeKu04' \
+curl http://localhost:8000/auth/o/token/ \
+-d 'client_id=ijUWruthOfmKyUMxKWM0rzwHhjrJZZYVtjW2kmY2' \
+-d 'client_secret=05LXRPpn1jrIY07ZFyFxwev0fOMgqRjyyyuoa6IwrPd71jvA1rnHUdjaw6EtSGU5jmSFU9v6XoZzcdQj3xxf3nV1gHiLIZqMNdRxnkD11zsAqH3UEpq3vUGKOwicg0Fg' \
 -d 'username=i3l@admin.com' \
 -d 'password=i3ladmin@123' \
 -d 'grant_type=password'

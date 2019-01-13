@@ -10,6 +10,9 @@ urlpatterns = [
     # Django admin
     path('admin/', admin.site.urls),
 
-    # Oauth2
-    path('api/v1/auth/', include(('apps.authx.urls', 'authx'), namespace='auth')),
+    # Auth urls
+    path('auth/', include(('apps.authx.urls', 'authx'), namespace='auth')),
+
+    # API
+    path('api/v1/', include(('apps.api.urls', 'rest_api'), namespace='api')),
 ]
