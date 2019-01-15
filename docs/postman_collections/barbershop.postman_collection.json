@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "8316f454-8948-4b5b-9e39-78f36719cc87",
+		"name": "barbershop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Get token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "yRwMCGQRBoIxNToB8XI6mOGqgQMu0Lz87vjPTRV8",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "JEPdWMh3LS6kRhVRtOqlj3MDFLQb9ZAUL12J0J8oM2cRP1YZ7q5cSYeYBzGbnIu1UxaQIXGPxJvYZu7oTy9W3Aw4iNJpW5Ta131SNzm2WKXCeXNU8CpIyje0bmO4SBQF",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "i3l@admin.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admini3l@123",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/auth/o/token/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"o",
+								"token",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "person",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"full_name\": \"Luiz Carlos P. O. de Junior\",\n\t\"mothers_name\": \"Sandra Regina P. de Oliveira\",\n\t\"fathers_name\": \"Luiz Carlos P. de Oliveira\",\n\t\"birthdate\": \"1992-11-29\",\n\t\"email\": \"lcpojr@gmail.com\",\n\t\"password\": \"290408jr\",\n\t\"document\": {\"type\": \"cpf\", \"number\": \"12574623770\"},\n\t\"phone\": {\"ddd\": 24, \"number\": 988495244},\n\t\"address\": {\n\t\t\"uf\": \"RJ\",\n\t\t\"city\": \"Petrópolis\",\n\t\t\"neighborhood\": \"Corrêas\",\n\t\t\"street\": \"Rua Antônio Flor da Silva\",\n\t\t\"number\": \"140\",\n\t\t\"reference\": \"Casa do formigão\",\n\t\t\"zipcode\": 25720300,\n\t\t\"latitude\": -22.439011,\n\t\t\"longitude\": -43.1311757\n\t}\n\t\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/person/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Cy76WgWlzWCXBZxQk15d5dXXK3NloJ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/person/{{uuid}}/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"person",
+								"{{uuid}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Cy76WgWlzWCXBZxQk15d5dXXK3NloJ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"full_name\": \"Luiz Carlos P. O. de Junior\",\n\t\"mothers_name\": \"Sandra Regina P. de Oliveira\",\n\t\"fathers_name\": \"Luiz Carlos P. de Oliveira\",\n\t\"birthdate\": \"1992-11-29\",\n\t\"document\": {\"type\": \"cpf\", \"number\": \"12574623770\"},\n\t\"phone\": {\"ddd\": 24, \"number\": 988495244},\n\t\"address\": {\n\t\t\"uf\": \"RJ\",\n\t\t\"city\": \"Petrópolis\",\n\t\t\"neighborhood\": \"Corrêas\",\n\t\t\"street\": \"Rua Antônio Flor da Silva\",\n\t\t\"number\": \"140\",\n\t\t\"reference\": \"Casa do formigão\",\n\t\t\"zipcode\": 25720300,\n\t\t\"latitude\": -22.439011,\n\t\t\"longitude\": -43.1311757\n\t}\n\t\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/person/3190b3ca-ebb0-4550-b9b1-7ff2fa9ee313/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"person",
+								"3190b3ca-ebb0-4550-b9b1-7ff2fa9ee313",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a97cd159-b4cc-40ff-b9a6-3eaa6605b5f1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2c6ecc31-3d49-4897-b207-cf48637fd65f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
