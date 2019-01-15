@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Person
+from apps.profiles.models import Profile
 
 
 class AddressSerializer(serializers.Serializer):
@@ -36,7 +36,7 @@ class DocumentSerializer(serializers.Serializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     """
-    Serializer to parse person Json data on creation
+    Serializer to parse profile Json data on creation
     """
 
     # User filds
@@ -50,7 +50,7 @@ class CreateSerializer(serializers.ModelSerializer):
     document = DocumentSerializer(many=False, required=True)
 
     class Meta:
-        model = Person
+        model = Profile
         fields = (
             'full_name', 'mothers_name', 'fathers_name', 'birthdate',
             'email', 'password', 'address', 'phone', 'document',
@@ -59,7 +59,7 @@ class CreateSerializer(serializers.ModelSerializer):
 
 class UpdateSerializer(serializers.ModelSerializer):
     """
-    Serializer to parse person Json data on update
+    Serializer to parse profile Json data on update
     """
 
     address = AddressSerializer(many=False, required=False)
@@ -67,7 +67,7 @@ class UpdateSerializer(serializers.ModelSerializer):
     document = DocumentSerializer(many=False, required=False)
 
     class Meta:
-        model = Person
+        model = Profile
         fields = (
             'full_name', 'mothers_name', 'fathers_name',
             'birthdate', 'address', 'phone', 'document',

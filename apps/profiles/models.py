@@ -5,10 +5,10 @@ from django.utils import timezone
 from django.conf import settings
 
 
-class Person(models.Model):
+class Profile(models.Model):
     """
-    This model contains the person data.
-    Persons represents the phisical person data.
+    This model contains the profile data.
+    Profiles represents the phisical profile data.
     It may be allways related to an user.
     """
 

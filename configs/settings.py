@@ -49,7 +49,8 @@ INSTALLED_APPS = [
 
     # Custom apps
     'apps.authx',
-    'apps.profiles'
+    'apps.profiles',
+    'apps.web'
 ]
 
 REST_FRAMEWORK = {

@@ -14,5 +14,5 @@ urlpatterns = [
     path('auth/', include(('apps.authx.urls', 'authx'), namespace='auth')),
 
     # API
-    path('api/v1/', include(('apps.api.urls', 'rest_api'), namespace='api')),
+    path('api/v1/', include(('apps.web.urls', 'rest_api'), namespace='api')),
 ]
