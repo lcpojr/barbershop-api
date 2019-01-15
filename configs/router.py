@@ -6,13 +6,17 @@ It may contain base configuration endpoints.
 from django.contrib import admin
 from django.urls import include, path
 
+from apps.web.controllers.profiles import ProfileListCreate, ProfileRetrieveUpdate
+
 urlpatterns = [
     # Django admin
     path('admin/', admin.site.urls),
 
     # Auth urls
-    path('auth/', include(('apps.authx.urls', 'authx'), namespace='auth')),
+    path('api/v1/auth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 
-    # API
-    path('api/v1/', include(('apps.api.urls', 'rest_api'), namespace='api')),
+    # Profiles urls
+    path('api/v1/profiles/', ProfileListCreate.as_view(), name='profile_create'),
+    path('api/v1/profiles/<uuid:pk>/', ProfileRetrieveUpdate.as_view(),
+         name='profile_retrieve_update'),
 ]

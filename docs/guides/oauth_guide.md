@@ -43,7 +43,7 @@ You can get a token by doing a request to `/api/v1/auth/token/` with the paramet
 **Exemple:**
 
 ```sh
-curl http://localhost:8000/auth/o/token/ \
+curl http://localhost:8000/api/v1/token/ \
 -d 'client_id=ijUWruthOfmKyUMxKWM0rzwHhjrJZZYVtjW2kmY2' \
 -d 'client_secret=05LXRPpn1jrIY07ZFyFxwev0fOMgqRjyyyuoa6IwrPd71jvA1rnHUdjaw6EtSGU5jmSFU9v6XoZzcdQj3xxf3nV1gHiLIZqMNdRxnkD11zsAqH3UEpq3vUGKOwicg0Fg' \
 -d 'username=i3l@admin.com' \

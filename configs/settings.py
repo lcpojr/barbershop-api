@@ -49,12 +49,16 @@ INSTALLED_APPS = [
 
     # Custom apps
     'apps.authx',
+    'apps.profiles',
+    'apps.web'
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-    )
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
 }
 
 AUTHENTICATION_BACKENDS = (
@@ -149,13 +153,13 @@ STATIC_URL = '/static/'
 # Media files (Uploaded by User)
 # https://docs.djangoproject.com/pt-br/2.1/ref/settings/#media-root
 
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # Oauth2 provider
 # https://django-oauth-toolkit.readthedocs.io/en/latest/settings.html
 OAUTH2_PROVIDER = {
-    'ACCESS_TOKEN_EXPIRE_SECONDS': 3600, # 1 Hour
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 3600,  # 1 Hour
     'SCOPES': {
         'profile:read': 'Can see a profile',
         'profile:write': 'Can edit a profile',
