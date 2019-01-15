@@ -12,7 +12,7 @@ from apps.profiles.models import Profile
 from apps.web.serializers.profiles import CreateSerializer, UpdateSerializer
 
 
-class ProfileCreate(APIView):
+class ProfileListCreate(APIView, ProtectedResourceView):
     """
     A view to creates a `Profile`.
 
@@ -20,6 +20,30 @@ class ProfileCreate(APIView):
     """
 
     serializer_class = CreateSerializer
+    permission_classes = (TokenMatchesOASRequirements,)
+    required_alternate_scopes = {
+        "GET": [['profile:read']]
+    }
+
+    def get(self, request, format=None):
+        """
+        Retrieves a list of `Profile`s
+        """
+        profiles = Profile.objects.filter()
+        if request.user.is_staff:
+            # Parsing response
+            response = []
+            for profile in profiles:
+                response.append({
+                    "id": profile.id,
+                    "full_name": profile.full_name,
+                    "email": profile.user.email,
+                    "date_joined": profile.user.date_joined,
+                    "is_active": profile.user.is_active,
+                })
+            return Response(response, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
     def post(self, request, format=None):
         """
@@ -74,7 +98,6 @@ class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
     """
 
     serializer_class = UpdateSerializer
-    authentication_classes = (OAuth2Authentication,)
     permission_classes = (TokenMatchesOASRequirements,)
     required_alternate_scopes = {
         "GET": [['profile:read']],
@@ -83,7 +106,7 @@ class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
 
     def get(self, request, pk, format=None):
         """
-        Retrieves the profile data
+        Retrieves a profile
         """
         profile = Profile.objects.get(pk=pk)
         if request.user.is_staff or request.user == profile.user:
@@ -97,7 +120,10 @@ class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
                 "document": profile.document,
                 "birthdate": profile.birthdate,
                 "email": profile.user.email,
-                "date_joined": profile.user.date_joined
+                "date_joined": profile.user.date_joined,
+                "is_active": profile.user.is_active,
+                "is_staff": profile.user.is_staff,
+                "is_staff": profile.user.is_admin
             }
             return Response(response, status=status.HTTP_200_OK)
         else:
@@ -105,7 +131,7 @@ class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
 
     def patch(self, request, pk, format=None):
         """
-        Updates the profile data
+        Updates the profile
         """
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
