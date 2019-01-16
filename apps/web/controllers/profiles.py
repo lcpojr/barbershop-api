@@ -1,10 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.parsers import JSONParser
 
 from oauth2_provider.views.generic import ProtectedResourceView
-from oauth2_provider.contrib.rest_framework.authentication import OAuth2Authentication
 from oauth2_provider.contrib.rest_framework import TokenMatchesOASRequirements
 
 from apps.authx.models import User
@@ -12,38 +10,14 @@ from apps.profiles.models import Profile
 from apps.web.serializers.profiles import CreateSerializer, UpdateSerializer
 
 
-class ProfileListCreate(APIView, ProtectedResourceView):
+class ProfileCreate(APIView):
     """
-    A view to creates a `Profile`.
+    A view to create a `Profile`.
 
     * Do not requires authentication.
     """
 
     serializer_class = CreateSerializer
-    permission_classes = (TokenMatchesOASRequirements,)
-    required_alternate_scopes = {
-        "GET": [['profile:read']]
-    }
-
-    def get(self, request, format=None):
-        """
-        Retrieves a list of `Profile`s
-        """
-        profiles = Profile.objects.filter()
-        if request.user.is_staff:
-            # Parsing response
-            response = []
-            for profile in profiles:
-                response.append({
-                    "id": profile.id,
-                    "full_name": profile.full_name,
-                    "email": profile.user.email,
-                    "created_at": profile.user.created_at,
-                    "is_active": profile.user.is_active,
-                })
-            return Response(response, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
     def post(self, request, format=None):
         """
@@ -51,6 +25,7 @@ class ProfileListCreate(APIView, ProtectedResourceView):
         """
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
+
             # Getting serialized data
             request_data = serializer.data
             if not User.objects.filter(email=request_data['email']):
@@ -85,13 +60,48 @@ class ProfileListCreate(APIView, ProtectedResourceView):
                 return Response({"id": profile.id}, status=status.HTTP_201_CREATED)
             else:
                 return Response(status=status.HTTP_409_CONFLICT)
+
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class ProfileList(APIView, ProtectedResourceView):
+    """
+    A view to list `Profiles`.
+
+    * Requires authentication.
+    * Only staffusers and adminusers can use
+    """
+
+    permission_classes = (TokenMatchesOASRequirements,)
+    required_alternate_scopes = {
+        "GET": [['profile:read']],
+    }
+
+    def get(self, request, format=None):
+        """
+        Retrieves a list of `Profiles`
+        """
+        if request.user.is_staff:
+            # Getting profiles
+            profiles = Profile.objects.filter()
+
+            response = []
+            for profile in profiles:
+                response.append({
+                    "id": profile.id,
+                    "full_name": profile.full_name,
+                    "email": profile.user.email,
+                    "is_active": profile.user.is_active,
+                })
+            return Response(response, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+
 class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
     """
-    A view to update a `Profile`.
+    A view to update and retrieve a `Profile`.
 
     * Requires authentication.
     * Only staffusers and the profile itself can use
@@ -108,10 +118,15 @@ class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
         """
         Retrieves a profile
         """
-        profile = Profile.objects.get(pk=pk)
+        try:
+            profile = Profile.objects.get(pk=pk)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
         if request.user.is_staff or request.user == profile.user:
             # Parsing response
             response = {
+                "id": profile.id,
                 "full_name": profile.full_name,
                 "mothers_name": profile.mothers_name,
                 "fathers_name": profile.fathers_name,
@@ -120,10 +135,11 @@ class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
                 "document": profile.document,
                 "birthdate": profile.birthdate,
                 "email": profile.user.email,
-                "created_at": profile.user.created_at,
+                "created_at": profile.created_at,
+                "updated_at": profile.created_at,
                 "is_active": profile.user.is_active,
                 "is_staff": profile.user.is_staff,
-                "is_staff": profile.user.is_admin
+                "is_admin": profile.user.is_admin
             }
             return Response(response, status=status.HTTP_200_OK)
         else:
@@ -133,11 +149,17 @@ class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
         """
         Updates the profile
         """
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            request_data = serializer.data  # Getting serialized data
-            profile = Profile.objects.get(pk=pk)  # Retrieving profile
-            if request.user.is_staff or request.user == profile.user:
+        try:
+            profile = Profile.objects.get(pk=pk)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        if request.user.is_staff or request.user == profile.user:
+
+            serializer = self.serializer_class(data=request.data)
+            if serializer.is_valid():
+                request_data = serializer.data  # Getting serialized data
+
                 # Updating profile
                 if 'full_name' in request_data:
                     profile.full_name = request_data['full_name']
@@ -163,6 +185,7 @@ class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
                 profile.save()
                 return Response({"id": profile.id}, status=status.HTTP_200_OK)
             else:
-                return Response(status=status.HTTP_401_UNAUTHORIZED)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
