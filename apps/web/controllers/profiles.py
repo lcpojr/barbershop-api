@@ -38,7 +38,7 @@ class ProfileListCreate(APIView, ProtectedResourceView):
                     "id": profile.id,
                     "full_name": profile.full_name,
                     "email": profile.user.email,
-                    "date_joined": profile.user.date_joined,
+                    "created_at": profile.user.created_at,
                     "is_active": profile.user.is_active,
                 })
             return Response(response, status=status.HTTP_200_OK)
@@ -120,7 +120,7 @@ class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
                 "document": profile.document,
                 "birthdate": profile.birthdate,
                 "email": profile.user.email,
-                "date_joined": profile.user.date_joined,
+                "created_at": profile.user.created_at,
                 "is_active": profile.user.is_active,
                 "is_staff": profile.user.is_staff,
                 "is_staff": profile.user.is_admin

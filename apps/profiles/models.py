@@ -24,6 +24,8 @@ class Profile(models.Model):
     address = pg.JSONField()
     document = pg.JSONField()
     birthdate = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name_plural = 'Profile'

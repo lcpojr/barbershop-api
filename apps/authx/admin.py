@@ -4,15 +4,18 @@ from django.contrib.auth.models import Permission, Group
 from .models import User
 from .forms import UserChangeForm, UserCreationForm
 
+
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
     add_form = UserCreationForm
 
     # The fields to be used in displaying the User model.
-    list_display = ('email', 'date_joined', 'is_active', 'is_staff', 'is_superuser')
-    list_filter = ('email', 'date_joined', 'is_active', 'is_staff', 'is_superuser')
-    
+    list_display = ('email', 'created_at', 'is_active',
+                    'is_staff', 'is_superuser')
+    list_filter = ('email', 'created_at', 'is_active',
+                   'is_staff', 'is_superuser')
+
     # The filds to be used in updates on User model.
     fieldsets = (
         ('Login', {'fields': ('email', 'password')}),
@@ -23,15 +26,16 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in inserts on User model.
     add_fieldsets = (
         ('Login', {
-            'classes': ('wide',), 
+            'classes': ('wide',),
             'fields': ('email', 'password1', 'password2')
-            }
+        }
         ),
     )
-    # Search and ordering    
+    # Search and ordering
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
+
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Permission)
