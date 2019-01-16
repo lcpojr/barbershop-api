@@ -25,7 +25,7 @@ urlpatterns = [
 
     # Products urls
     path('api/v1/categories/', products.CategoryCreate.as_view(),
-         name='category_list_create'),
+         name='category_create'),
     path('api/v1/categories/list', products.CategoryList.as_view(),
          name='category_list'),
     path('api/v1/categories/<uuid:pk>/', products.CategoryUpdateDelete.as_view(),
@@ -35,5 +35,5 @@ urlpatterns = [
     path('api/v1/products/list', products.ProductList.as_view(),
          name='product_list'),
     path('api/v1/products/<uuid:pk>/', products.ProductRetrieveUpdateDelete.as_view(),
-         name='product_update_delete'),
+         name='product_retrieve_update_delete'),
 ]
