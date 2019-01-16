@@ -28,7 +28,10 @@ class Profile(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name_plural = 'Profile'
+        verbose_name_plural = 'Profiles'
+
+    def __str__(self):
+        return self.full_name
 
     def get_age(self):
         return timezone.now().year - self.birthdate.year

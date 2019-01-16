@@ -11,15 +11,13 @@ class UserAdmin(BaseUserAdmin):
     add_form = UserCreationForm
 
     # The fields to be used in displaying the User model.
-    list_display = ('email', 'created_at', 'is_active',
-                    'is_staff', 'is_superuser')
-    list_filter = ('email', 'created_at', 'is_active',
-                   'is_staff', 'is_superuser')
+    list_display = ('email', 'created_at', 'is_active')
+    list_filter = ('email', 'created_at', 'is_active')
 
     # The filds to be used in updates on User model.
     fieldsets = (
         ('Login', {'fields': ('email', 'password')}),
-        ('Permissions', {'fields': ('is_staff', 'is_superuser')}),
+        ('Permissions', {'fields': ('is_staff', 'is_superuser', 'is_admin')}),
         ('Status', {'fields': ('is_active',)}),
     )
 

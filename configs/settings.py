@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # Custom apps
     'apps.authx',
     'apps.profiles',
+    'apps.products',
     'apps.web'
 ]
 
@@ -167,8 +168,11 @@ OAUTH2_PROVIDER = {
         'cart:remove': 'Can remove itens from the shopping cart',
         'sale:close': 'Can close the sale',
         'product:read': 'Can see a product',
+        'product:write': 'Can create a product',
         'service:read': 'Can see a service',
+        'service:write': 'Can create a service',
         'promotion:read': 'Can see a promotion',
+        'promotion:write': 'Can create a promotion',
     }
 }
 

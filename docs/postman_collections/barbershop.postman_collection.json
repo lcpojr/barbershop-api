@@ -113,7 +113,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "PzKxR9HtiW4tpUywtiATG6xz8wEPD8",
+									"value": "PolKQpedQKq3NFZIfUTXV39Vl7Wiwa",
 									"type": "string"
 								}
 							]
@@ -125,7 +125,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/profiles/",
+							"raw": "{{host}}/api/v1/profiles/list",
 							"host": [
 								"{{host}}"
 							],
@@ -133,7 +133,7 @@
 								"api",
 								"v1",
 								"profiles",
-								""
+								"list"
 							]
 						}
 					},
@@ -175,7 +175,7 @@
 					"response": []
 				},
 				{
-					"name": "update",
+					"name": "Update",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -209,6 +209,354 @@
 								"api",
 								"v1",
 								"profiles",
+								"{{uuid}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "categories",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "L6Q2TazVWLIavBg40kVguMDiNfDpaN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Bebidas\",\n\t\"description\": \"Bebidas alcólicas, sucos e refrigerantes\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/categories/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "PolKQpedQKq3NFZIfUTXV39Vl7Wiwa",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/categories/list",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "L6Q2TazVWLIavBg40kVguMDiNfDpaN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Petiscos\",\n\t\"description\": \"Batatas, Salgados e biscoitos\"\n\t\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/categories/{{uuid}}/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								"{{uuid}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "L6Q2TazVWLIavBg40kVguMDiNfDpaN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/categories/{{uuid}}/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								"{{uuid}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "PolKQpedQKq3NFZIfUTXV39Vl7Wiwa",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Cerveja Itaipava Garrafa\",\n\t\"description\": \"Bebidas alcólica autêntica de Petrópolis\",\n\t\"purchase_price\": 5.99,\n\t\"sale_price\": 7.99,\n\t\"category\": \"61bbbc3b-5255-431a-aa55-e474d9843e81\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/products/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/products/list",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "PolKQpedQKq3NFZIfUTXV39Vl7Wiwa",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/products/{{uuid}}/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"{{uuid}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "PolKQpedQKq3NFZIfUTXV39Vl7Wiwa",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Cerveja Itaipava Lata\",\n\t\"description\": \"Bebidas alcólica autêntica de Petrópolis\",\n\t\"purchase_price\": 2.33,\n\t\"sale_price\": 4,\n\t\"category\": \"61bbbc3b-5255-431a-aa55-e474d9843e81\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/products/{{uuid}}/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"{{uuid}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "PolKQpedQKq3NFZIfUTXV39Vl7Wiwa",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/products/{{uuid}}/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
 								"{{uuid}}",
 								""
 							]
