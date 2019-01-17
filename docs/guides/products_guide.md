@@ -4,6 +4,7 @@ Products represents the itens consumed by a cliend and used on sale carts.
 Every product will have a `category`, `purchase_price` and `sale_price`.
 
 **Categories can be created by a adminuser**
+
 **The prices will be used on relatories**
 
 ## How to use
