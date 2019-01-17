@@ -1,8 +1,12 @@
 # Application
 Django==2.1.5
 djangorestframework==3.9.0
-Pillow==5.4.1
 rest_condition
+
+# QRCode
+qrcode
+django-qr-code
+Pillow
 
 # Authentication
 django-allauth

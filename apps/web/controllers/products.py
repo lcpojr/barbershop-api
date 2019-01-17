@@ -1,3 +1,6 @@
+from django.shortcuts import render
+from django.views.generic import View
+
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
@@ -182,7 +185,6 @@ class ProductCreate(APIView, ProtectedResourceView):
                         product.description = request_data['description']
 
                     product.save()
-                    print(product)
                     return Response({"id": product.id}, status=status.HTTP_201_CREATED)
                 else:
                     return Response(status=status.HTTP_409_CONFLICT)
@@ -217,6 +219,27 @@ class ProductList(APIView):
                 "sale_price": product.sale_price
             })
         return Response(response, status=status.HTTP_200_OK)
+
+
+class ProductQRCode(View):
+    """
+    A view to get a `Product` QRCode.
+
+    * Requires authentication.
+    * Only staffusers and adminusers can use.
+    * It will render an html with the code.
+    """
+
+    def get(self, request, pk, format=None):
+        """
+        Retrieves a `Product` and show its QRCode.
+        """
+        try:
+            product = Product.objects.get(pk=pk)
+        except:
+            return render(request, 'errors/404_qrcode.html')
+
+        return render(request, 'product_qrcode.html', {"product": product})
 
 
 class ProductRetrieveUpdateDelete(APIView, ProtectedResourceView):

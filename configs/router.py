@@ -34,6 +34,8 @@ urlpatterns = [
          name='product_create'),
     path('api/v1/products/list', products.ProductList.as_view(),
          name='product_list'),
+    path('api/v1/products/<uuid:pk>/qrcode', products.ProductQRCode.as_view(),
+         name='product_qrcode'),
     path('api/v1/products/<uuid:pk>/', products.ProductRetrieveUpdateDelete.as_view(),
          name='product_retrieve_update_delete'),
 ]
