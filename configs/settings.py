@@ -36,6 +36,9 @@ INSTALLED_APPS = [
     # Rest apps
     'rest_framework',
 
+    # QRCode
+    'qr_code',
+
     # Oauth
     'oauth2_provider',
     'corsheaders',
