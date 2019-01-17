@@ -47,14 +47,14 @@ class ProfileCreate(APIView):
                 if 'fathers_name' in request_data:
                     profile.fathers_name = request_data['fathers_name']
 
-                if 'phone' in request_data:
-                    profile.phone = request_data['phone']
+                if 'phones' in request_data:
+                    profile.phones = request_data['phones']
 
-                if 'address' in request_data:
-                    profile.address = request_data['address']
+                if 'addresses' in request_data:
+                    profile.addresses = request_data['addresses']
 
-                if 'document' in request_data:
-                    profile.document = request_data['document']
+                if 'documents' in request_data:
+                    profile.documents = request_data['documents']
 
                 profile.save()
                 return Response({"id": profile.id}, status=status.HTTP_201_CREATED)
@@ -130,9 +130,9 @@ class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
                 "full_name": profile.full_name,
                 "mothers_name": profile.mothers_name,
                 "fathers_name": profile.fathers_name,
-                "phone": profile.phone,
-                "address": profile.address,
-                "document": profile.document,
+                "phones": profile.phones,
+                "addresses": profile.addresses,
+                "documents": profile.documents,
                 "birthdate": profile.birthdate,
                 "email": profile.user.email,
                 "created_at": profile.created_at,
@@ -173,14 +173,14 @@ class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
                 if 'fathers_name' in request_data:
                     profile.fathers_name = request_data['fathers_name']
 
-                if 'phone' in request_data:
-                    profile.phone = request_data['phone']
+                if 'phones' in request_data:
+                    profile.phones = request_data['phones']
 
-                if 'address' in request_data:
-                    profile.address = request_data['address']
+                if 'addresses' in request_data:
+                    profile.addresses = request_data['addresses']
 
-                if 'document' in request_data:
-                    profile.document = request_data['document']
+                if 'documents' in request_data:
+                    profile.documents = request_data['documents']
 
                 profile.save()
                 return Response({"id": profile.id}, status=status.HTTP_200_OK)
