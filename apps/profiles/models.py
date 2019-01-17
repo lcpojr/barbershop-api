@@ -1,4 +1,5 @@
 import uuid
+
 from django.db import models
 from django.contrib.postgres import fields as pg
 from django.utils import timezone
@@ -20,9 +21,9 @@ class Profile(models.Model):
         max_length=150, verbose_name="Mother's Name", null=True)
     fathers_name = models.CharField(
         max_length=150, verbose_name="Father's Name", null=True)
-    phone = pg.JSONField()
-    address = pg.JSONField()
-    document = pg.JSONField()
+    phones = pg.JSONField(default=list)
+    addresses = pg.JSONField(default=list)
+    documents = pg.JSONField(default=list)
     birthdate = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

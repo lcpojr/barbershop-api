@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from apps.profiles.models import Profile
 
 
@@ -45,15 +46,15 @@ class CreateSerializer(serializers.ModelSerializer):
         max_length=50, style={'input_type': 'password'})
 
     # Profile extra fields
-    address = AddressSerializer(many=False, required=False)
-    phone = PhoneSerializer(many=False, required=False)
-    document = DocumentSerializer(many=False, required=True)
+    addresses = AddressSerializer(many=True, required=False)
+    phones = PhoneSerializer(many=True, required=False)
+    documents = DocumentSerializer(many=True, required=True)
 
     class Meta:
         model = Profile
         fields = (
             'full_name', 'mothers_name', 'fathers_name', 'birthdate',
-            'email', 'password', 'address', 'phone', 'document',
+            'email', 'password', 'addresses', 'phones', 'documents',
         )
 
 
@@ -62,13 +63,13 @@ class UpdateSerializer(serializers.ModelSerializer):
     Serializer to parse profile Json data on update
     """
 
-    address = AddressSerializer(many=False, required=False)
-    phone = PhoneSerializer(many=False, required=False)
-    document = DocumentSerializer(many=False, required=False)
+    addresses = AddressSerializer(many=True, required=False)
+    phones = PhoneSerializer(many=True, required=False)
+    documents = DocumentSerializer(many=True, required=False)
 
     class Meta:
         model = Profile
         fields = (
             'full_name', 'mothers_name', 'fathers_name',
-            'birthdate', 'address', 'phone', 'document',
+            'birthdate', 'addresses', 'phones', 'documents',
         )
