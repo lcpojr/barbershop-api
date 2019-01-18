@@ -10,7 +10,7 @@ This project will contain all the auth service and the rest API to be used by mo
 
 ### How to use
 
-Frist you should install the docker and docker-compose applications (links on requirements session).
+First you should install the docker and docker-compose applications (links on requirements session).
 
 - `docker-compose build` to build the container;
 - `docker-compose up` to run the server (you can pass `-d` to run in backgroud);
