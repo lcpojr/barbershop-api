@@ -13,6 +13,16 @@ class ProductItemSerializer(serializers.ModelSerializer):
         fields = ('item', 'quantity')
 
 
+class ProductItemDeleteSerializer(serializers.ModelSerializer):
+    """
+    Serializer to parse product itens Json data on delete
+    """
+
+    class Meta:
+        model = ProductItem
+        fields = ('item',)
+
+
 class SaleCreateSerializer(serializers.ModelSerializer):
     """
     Serializer to parse sales Json data on creation
@@ -27,10 +37,22 @@ class SaleCreateSerializer(serializers.ModelSerializer):
 
 class SaleEditProductSerializer(serializers.ModelSerializer):
     """
-    Serializer to parse sales Json data on creation
+    Serializer to parse sales Json data on update products
     """
 
     products = ProductItemSerializer(many=True, required=True)
+
+    class Meta:
+        model = Sale
+        fields = ('products',)
+
+
+class SaleRemoveProductSerializer(serializers.ModelSerializer):
+    """
+    Serializer to parse sales Json data on remove products
+    """
+
+    products = ProductItemDeleteSerializer(many=True, required=True)
 
     class Meta:
         model = Sale

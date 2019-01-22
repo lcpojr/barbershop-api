@@ -47,8 +47,8 @@ class ProfileCreate(APIView):
 
                         profile.save()
                         return Response({"id": profile.id}, status=status.HTTP_201_CREATED)
-                except:
-                    return Response({"type": "internal_server_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                except Exception as e:
+                    return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
                 return Response({"type": "profile_already_exist"}, status=status.HTTP_409_CONFLICT)
 
@@ -154,32 +154,32 @@ class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
                     with transaction.atomic():
 
                         # Updating profile
-                        if 'full_name' in request_data:
+                        if 'full_name' in request_data and request_data['full_name']:
                             profile.full_name = request_data['full_name']
 
-                        if 'birthdate' in request_data:
+                        if 'birthdate' in request_data and request_data['birthdate']:
                             profile.birthdate = request_data['birthdate']
 
-                        if 'mothers_name' in request_data:
+                        if 'mothers_name' in request_data and request_data['mothers_name']:
                             profile.mothers_name = request_data['mothers_name']
 
-                        if 'fathers_name' in request_data:
+                        if 'fathers_name' in request_data and request_data['fathers_name']:
                             profile.fathers_name = request_data['fathers_name']
 
-                        if 'phones' in request_data:
+                        if 'phones' in request_data and request_data['phones']:
                             profile.phones = request_data['phones']
 
-                        if 'addresses' in request_data:
+                        if 'addresses' in request_data and request_data['addresses']:
                             profile.addresses = request_data['addresses']
 
-                        if 'documents' in request_data:
+                        if 'documents' in request_data and request_data['documents']:
                             profile.documents = request_data['documents']
 
                         profile.save()
                         return Response({"id": profile.id}, status=status.HTTP_200_OK)
 
-                except:
-                    return Response({"type": "internal_server_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                except Exception as e:
+                    return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
                 return Response({"type": "validation_error", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         else:

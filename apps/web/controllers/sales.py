@@ -11,7 +11,7 @@ from oauth2_provider.contrib.rest_framework import TokenMatchesOASRequirements
 from apps.profiles.models import Profile
 from apps.products.models import Product
 from apps.sales.models import Sale, ProductItem
-from apps.web.serializers.sales import SaleCreateSerializer, SaleEditProductSerializer
+from apps.web.serializers.sales import SaleCreateSerializer, SaleEditProductSerializer, SaleRemoveProductSerializer
 
 
 class SaleCreate(APIView, ProtectedResourceView):
@@ -45,26 +45,26 @@ class SaleCreate(APIView, ProtectedResourceView):
                                 pk=request_data['client'])
                             sale.status = 'open'
 
-                            if 'employe' in request_data:
+                            if 'employe' in request_data and request_data['employe']:
                                 sale.employe = Profile.objects.get(
                                     pk=request_data['employe'])
 
+                            sale.save()
+
                             # Adding products
-                            if 'products' in request_data:
+                            if 'products' in request_data and request_data['products']:
                                 for product in request_data['products']:
                                     product_item = ProductItem()
+                                    product_item.sale = sale
                                     product_item.item = Product.objects.get(
                                         pk=product['item'])
                                     product_item.quantity = product['quantity']
                                     product_item.save()
 
-                                    sale.products.add(product_item)
-
-                            sale.save()
                             return Response({"id": sale.id}, status=status.HTTP_201_CREATED)
 
-                    except:
-                        return Response({"type": "internal_server_erro"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                    except Exception as e:
+                        return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                 else:
                     return Response({"type": "sale_already_exist"}, status=status.HTTP_409_CONFLICT)
             else:
@@ -131,13 +131,18 @@ class SaleRetrieve(APIView, ProtectedResourceView):
 
         if request.user.is_staff or request.user == sale.client.user:
             # Parsing response
+            total = 0
             products = []
-            for product_item in sale.products.all():
+            for product_item in sale.get_products():
+                subtotal = product_item.get_total()
+                total += subtotal
+
                 products.append({
                     "id": product_item.id,
                     "name": product_item.item.name,
                     "price": product_item.item.sale_price,
-                    "quantity": product_item.quantity
+                    "quantity": product_item.quantity,
+                    "subtotal": subtotal
                 })
 
             response = {
@@ -149,29 +154,29 @@ class SaleRetrieve(APIView, ProtectedResourceView):
                 "status": sale.status,
                 "created_at": sale.created_at,
                 "updated_at": sale.updated_at,
-                "total": sale.get_total()
+                "total": total
             }
             return Response(response, status=status.HTTP_200_OK)
         else:
             return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
-class SaleUpdateProduct(APIView, ProtectedResourceView):
+class SaleUpdateRemoveProduct(APIView, ProtectedResourceView):
     """
-    A view to add product to the `Sale`.
+    A view to manage products on the `Sale`.
 
     * Requires authentication.
-    * Only staffusers and the profile itself can use
+    * Only staffusers and the client itself can use
     """
-    serializer_class = SaleEditProductSerializer
     permission_classes = (TokenMatchesOASRequirements,)
     required_alternate_scopes = {
-        "PATCH": [['sale:write']]
+        "PATCH": [['sale:write']],
+        "DELETE": [['sale:write']]
     }
 
     def patch(self, request, pk, format=None):
         """
-        Retrieves a profile
+        Updates the sale products
         """
         try:
             sale = Sale.objects.get(pk=pk)
@@ -179,7 +184,7 @@ class SaleUpdateProduct(APIView, ProtectedResourceView):
             return Response({"type": "not_found"}, status=status.HTTP_404_NOT_FOUND)
 
         if request.user.is_staff or request.user == sale.client.user:
-            serializer = self.serializer_class(data=request.data)
+            serializer = SaleEditProductSerializer(data=request.data)
             if serializer.is_valid():
                 # Getting serialized data
                 request_data = serializer.data
@@ -187,33 +192,179 @@ class SaleUpdateProduct(APIView, ProtectedResourceView):
                     with transaction.atomic():
 
                         # Parsing itens
-                        products = []
                         for value in request_data['products']:
                             # Searching product item
-                            product_item = sale.products.filter(
-                                item__pk=value['item']).first()
+                            product_item = ProductItem.objects.filter(
+                                sale=sale,
+                                item__pk=value['item']
+                            ).first()
 
                             if product_item:
                                 # Updating sale product item
                                 product_item.quantity = value['quantity']
-                                product_item.save()
                             else:
                                 # Adding new sale product item
                                 product_item = ProductItem()
+                                product_item.sale = sale
                                 product_item.item = Product.objects.get(
                                     pk=value['item'])
                                 product_item.quantity = value['quantity']
-                                product_item.save()
 
-                            products.append(product_item)
-
-                        sale.products.set(products)
-                        sale.save()
+                            product_item.save()
 
                         return Response({"id": sale.id}, status=status.HTTP_200_OK)
-                except:
-                    return Response({"type": "internal_server_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+                except Exception as e:
+                    return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
                 return Response({"type": "validation_error", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    def delete(self, request, pk, format=None):
+        """
+        Remove products from the sale
+        """
+        try:
+            sale = Sale.objects.get(pk=pk)
+        except:
+            return Response({"type": "not_found"}, status=status.HTTP_404_NOT_FOUND)
+
+        if request.user.is_staff or request.user == sale.client.user:
+            serializer = SaleRemoveProductSerializer(data=request.data)
+            if serializer.is_valid():
+                # Getting serialized data
+                request_data = serializer.data
+                try:
+                    with transaction.atomic():
+
+                        # Parsing itens
+                        for value in request_data['products']:
+                            # Searching product item
+                            ProductItem.objects.filter(
+                                sale=sale,
+                                item__pk=value['item']
+                            ).delete()
+
+                        return Response(status=status.HTTP_204_NO_CONTENT)
+
+                except Exception as e:
+                    return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            else:
+                return Response({"type": "validation_error", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class SaleClose(APIView, ProtectedResourceView):
+    """
+    A view to closes the `Sale`.
+    It changes the sale status to `waiting`.
+
+    * Requires authentication.
+    * Only staffusers and the client itself can use
+    """
+    permission_classes = (TokenMatchesOASRequirements,)
+    required_alternate_scopes = {
+        "PATCH": [['sale:write']]
+    }
+
+    def patch(self, request, pk, format=None):
+        """
+        Updates the sale
+        """
+        try:
+            sale = Sale.objects.get(pk=pk)
+        except:
+            return Response({"type": "not_found"}, status=status.HTTP_404_NOT_FOUND)
+
+        if request.user.is_staff or request.user == sale.client.user:
+            try:
+                with transaction.atomic():
+
+                    # Updating sale
+                    sale.status = 'waiting'
+                    sale.save()
+
+                    return Response({"id": sale.id}, status=status.HTTP_200_OK)
+
+            except Exception as e:
+                return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class SaleCancelate(APIView, ProtectedResourceView):
+    """
+    A view to cancelate the `Sale`.
+    It changes the sale status to `canceled`.
+
+    * Requires authentication.
+    * Only staffusers can use
+    """
+    permission_classes = (TokenMatchesOASRequirements,)
+    required_alternate_scopes = {
+        "PATCH": [['sale:write']]
+    }
+
+    def patch(self, request, pk, format=None):
+        """
+        Updates the sale
+        """
+        try:
+            sale = Sale.objects.get(pk=pk)
+        except:
+            return Response({"type": "not_found"}, status=status.HTTP_404_NOT_FOUND)
+
+        if request.user.is_staff:
+            try:
+                with transaction.atomic():
+
+                    # Updating sale
+                    sale.status = 'canceled'
+                    sale.save()
+
+                    return Response({"id": sale.id}, status=status.HTTP_200_OK)
+
+            except Exception as e:
+                return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class SalePay(APIView, ProtectedResourceView):
+    """
+    A view to pay the `Sale`.
+    It changes the sale status to `payed`.
+
+    * Requires authentication.
+    * Only staffusers can use
+    """
+    permission_classes = (TokenMatchesOASRequirements,)
+    required_alternate_scopes = {
+        "PATCH": [['sale:write']]
+    }
+
+    def patch(self, request, pk, format=None):
+        """
+        Updates the sale
+        """
+        try:
+            sale = Sale.objects.get(pk=pk)
+        except:
+            return Response({"type": "not_found"}, status=status.HTTP_404_NOT_FOUND)
+
+        if request.user.is_staff:
+            try:
+                with transaction.atomic():
+
+                    # Updating sale
+                    sale.status = 'payed'
+                    sale.save()
+
+                    return Response({"id": sale.id}, status=status.HTTP_200_OK)
+
+            except Exception as e:
+                return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)

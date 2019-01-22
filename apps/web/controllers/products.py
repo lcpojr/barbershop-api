@@ -43,14 +43,14 @@ class CategoryCreate(APIView, ProtectedResourceView):
                             category = Category()
                             category.name = request_data['name']
 
-                            if 'description' in request_data:
+                            if 'description' in request_data and request_data['description']:
                                 category.description = request_data['description']
 
                             category.save()
                             return Response({"id": category.id}, status=status.HTTP_201_CREATED)
 
-                    except:
-                        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                    except Exception as e:
+                        return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                 else:
                     return Response({"type": "category_already_exist"}, status=status.HTTP_409_CONFLICT)
             else:
@@ -125,17 +125,17 @@ class CategoryUpdateDelete(APIView, ProtectedResourceView):
                     with transaction.atomic():
 
                         # Updating category
-                        if 'name' in request_data:
+                        if 'name' in request_data and request_data['name']:
                             category.name = request_data['name']
 
-                        if 'description' in request_data:
+                        if 'description' in request_data and request_data['description']:
                             category.description = request_data['description']
 
                         category.save()
                         return Response({"id": category.id}, status=status.HTTP_200_OK)
 
-                except:
-                    return Response({"type": "internal_server_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                except Exception as e:
+                    return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
                 return Response({"type": "validation_error", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -159,7 +159,7 @@ class CategoryUpdateDelete(APIView, ProtectedResourceView):
                     return Response(status=status.HTTP_204_NO_CONTENT)
 
             except:
-                return Response({"type": "internal_server_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -198,14 +198,14 @@ class ProductCreate(APIView, ProtectedResourceView):
                             product.purchase_price = request_data['purchase_price']
                             product.sale_price = request_data['sale_price']
 
-                            if 'description' in request_data:
+                            if 'description' in request_data and request_data['description']:
                                 product.description = request_data['description']
 
                             product.save()
                             return Response({"id": product.id}, status=status.HTTP_201_CREATED)
 
-                    except:
-                        return Response({"type": "internal_server_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                    except Exception as e:
+                        return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                 else:
                     return Response({"type": "product_already_exist"}, status=status.HTTP_409_CONFLICT)
             else:
@@ -326,27 +326,27 @@ class ProductRetrieveUpdateDelete(APIView, ProtectedResourceView):
                     with transaction.atomic():
 
                         # Updating product
-                        if 'name' in request_data:
+                        if 'name' in request_data and request_data['name']:
                             product.name = request_data['name']
 
-                        if 'category' in request_data:
+                        if 'category' in request_data and request_data['category']:
                             product.category = Category.objects.get(
                                 pk=request_data['category'])
 
-                        if 'description' in request_data:
+                        if 'description' in request_data and request_data['description']:
                             product.description = request_data['description']
 
-                        if 'purchase_price' in request_data:
+                        if 'purchase_price' in request_data and request_data['purchase_price']:
                             product.purchase_price = request_data['purchase_price']
 
-                        if 'sale_price' in request_data:
+                        if 'sale_price' in request_data and request_data['sale_price']:
                             product.sale_price = request_data['sale_price']
 
                         product.save()
                         return Response({"id": product.id}, status=status.HTTP_200_OK)
 
-                except:
-                    return Response({"type": "internal_server_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                except Exception as e:
+                    return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
                 return Response({"type": "validation_error", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -369,7 +369,7 @@ class ProductRetrieveUpdateDelete(APIView, ProtectedResourceView):
                     product.delete()
                     return Response(status=status.HTTP_204_NO_CONTENT)
 
-            except:
-                return Response({"type": "internal_server_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            except Exception as e:
+                return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
