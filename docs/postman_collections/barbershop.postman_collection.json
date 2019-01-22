@@ -25,22 +25,22 @@
 							"urlencoded": [
 								{
 									"key": "client_id",
-									"value": "tpOVjNi38NmTl6siWed7rX8FRyWcsTCB1kvsBnl1",
+									"value": "OuN4FuDSjd4DwfL1AokkrydMXTYzLxLAMb1H3koR",
 									"type": "text"
 								},
 								{
 									"key": "client_secret",
-									"value": "hABYmKxspM2Be1LFR4ohMwH8VtEtsBVbKf2AtBplF3G9LW4w6PVzKf8RSAZe6h8aGwjDbi90iWGwJZy6iUGm25lgMqLwKRyAtrp9Qk8EADB3sfO9xUDYIobe0vlTpqUF",
+									"value": "1ru3x9GQ92RLc1OyYVJdVuPXdVsGjnijhMmzD0ZYCDr8B5SJghabYyEnjFceH3MmRNiP2Vy3HJ3iNp2c0gdIFqXrf8LAZJWpZy76JS09e4HEBnByVfAUyD6VfqMZdZ7i",
 									"type": "text"
 								},
 								{
 									"key": "username",
-									"value": "lcpojr@gmail.com",
+									"value": "admin@i3l.com",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "123456",
+									"value": "i3ladmin@123",
 									"type": "text"
 								},
 								{
@@ -85,7 +85,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"full_name\": \"Luiz Carlos P. O\",\n\t\"email\": \"lcpojr@gmail.com\",\n\t\"password\": \"123456\",\n\t\"documents\": [\n\t\t{\"type\": \"cpf\", \"number\": \"12574623770\"}\n\t]\n}"
+							"raw": "{\n\t\"full_name\": \"Luiz Carlos P. O. Junior\",\n\t\"email\": \"lcpojr@gmail.com\",\n\t\"password\": \"123456\",\n\t\"documents\": [\n\t\t{\"type\": \"cpf\", \"number\": \"12574623770\"}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{host}}/api/v1/profiles/",
@@ -113,7 +113,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "EIqY6DIxe4shmkjySsGF93kS0likO3",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
 									"type": "string"
 								}
 							]
@@ -229,7 +229,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "L6Q2TazVWLIavBg40kVguMDiNfDpaN",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
 									"type": "string"
 								}
 							]
@@ -389,7 +389,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "PolKQpedQKq3NFZIfUTXV39Vl7Wiwa",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
 									"type": "string"
 								}
 							]
@@ -405,7 +405,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Cerveja Itaipava Garrafa\",\n\t\"description\": \"Bebidas alcólica autêntica de Petrópolis\",\n\t\"purchase_price\": 5.99,\n\t\"sale_price\": 7.99,\n\t\"category\": \"61bbbc3b-5255-431a-aa55-e474d9843e81\"\n}"
+							"raw": "{\n\t\"name\": \"Cerveja Itaipava Garrafa\",\n\t\"description\": \"Bebidas alcólica autêntica de Petrópolis\",\n\t\"purchase_price\": 5.99,\n\t\"sale_price\": 7.99,\n\t\"category\": \"91998e26-c42b-4826-8e7f-aa35d192c7c4\"\n}"
 						},
 						"url": {
 							"raw": "{{host}}/api/v1/products/",
@@ -433,7 +433,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "xBXLqftxf0Aox3s9jmNdSs2wCkeHji",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
 									"type": "string"
 								}
 							]
@@ -579,6 +579,16 @@
 				{
 					"name": "Create",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -590,7 +600,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\": \"20734c98-4080-4f15-a3a0-1a7df3a5ef0a\",\n\t\"products\": [\n\t\t{\"item\": \"20734c98-4080-4f15-a3a0-1a7df3a5ef0a\", \"quantity\": 2}\n\t]\n}"
+							"raw": "{\n\t\"client\": \"87830c00-cfe6-4a24-a168-07f01ffa2542\",\n\t\"products\": [\n\t\t{\"item\": \"2db6fa47-c66a-44e6-bbb3-1a4c5d9db764\", \"quantity\": 2}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{host}}/api/v1/sales/",
@@ -649,7 +659,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "CCjv6a0q9aRSaJ7XBAwXTgUj20rfKX",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
 									"type": "string"
 								}
 							]
@@ -677,14 +687,14 @@
 					"response": []
 				},
 				{
-					"name": "Edit products",
+					"name": "Update products",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "IetSWSFiqS4I2q5n1rYiqZBIYAA4wo",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
 									"type": "string"
 								}
 							]
@@ -700,7 +710,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"products\": [\n\t\t{\"item\": \"537cbf13-f6e8-49bb-b19a-a09d88c2c106\", \"quantity\": 3},\n\t\t{\"item\": \"fa60f203-8e01-4bc0-942c-fd9e04906dfd\", \"quantity\": 1}\n\t]\n}"
+							"raw": "{\n\t\"products\": [\n\t\t{\"item\": \"2db6fa47-c66a-44e6-bbb3-1a4c5d9db764\", \"quantity\": 2},\n\t\t{\"item\": \"083f2485-841e-4fcb-86fb-51e40ea432f0\", \"quantity\": 1}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{host}}/api/v1/sales/{{uuid}}/products/",
@@ -713,6 +723,157 @@
 								"sales",
 								"{{uuid}}",
 								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/{{uuid}}/products/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								"{{uuid}}",
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Close",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "rgPsRBH97XQ2gE7jSVyd65RcwjYB7d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/{{uuid}}/close/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								"{{uuid}}",
+								"close",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "rgPsRBH97XQ2gE7jSVyd65RcwjYB7d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/{{uuid}}/cancelate/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								"{{uuid}}",
+								"cancelate",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pay",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "rgPsRBH97XQ2gE7jSVyd65RcwjYB7d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/{{uuid}}/pay/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								"{{uuid}}",
+								"pay",
 								""
 							]
 						}
