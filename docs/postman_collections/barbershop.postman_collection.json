@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8316f454-8948-4b5b-9e39-78f36719cc87",
+		"_postman_id": "2bd91f1e-01e3-4a4f-94a4-67fa30178587",
 		"name": "barbershop",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -25,22 +25,22 @@
 							"urlencoded": [
 								{
 									"key": "client_id",
-									"value": "Q9JnHIcApD0kTv6J0LepiXIH5X6i9ECrmMCbhiD4",
+									"value": "OuN4FuDSjd4DwfL1AokkrydMXTYzLxLAMb1H3koR",
 									"type": "text"
 								},
 								{
 									"key": "client_secret",
-									"value": "bpFES9nmQZa4dnxuwObRlpsVuRjb5xScPGWwd4sc8rCirMHQXYZQM7iYyxAkg11OUoMbe1qnjGlNPvviMGQHj4DX9PrpG9wtkuKcO6hegCKnYU6P4FuNAhueZaWLMXBj",
+									"value": "1ru3x9GQ92RLc1OyYVJdVuPXdVsGjnijhMmzD0ZYCDr8B5SJghabYyEnjFceH3MmRNiP2Vy3HJ3iNp2c0gdIFqXrf8LAZJWpZy76JS09e4HEBnByVfAUyD6VfqMZdZ7i",
 									"type": "text"
 								},
 								{
 									"key": "username",
-									"value": "i3l@admin.com",
+									"value": "admin@i3l.com",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "admini3l@123",
+									"value": "i3ladmin@123",
 									"type": "text"
 								},
 								{
@@ -85,7 +85,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"full_name\": \"Luiz Carlos P. O. de Junior\",\n\t\"mothers_name\": \"Sandra Regina P. de Oliveira\",\n\t\"fathers_name\": \"Luiz Carlos P. de Oliveira\",\n\t\"birthdate\": \"1992-11-29\",\n\t\"email\": \"lcpojr@gmail.com\",\n\t\"password\": \"290408jr\",\n\t\"document\": {\"type\": \"cpf\", \"number\": \"12574623770\"},\n\t\"phone\": {\"ddd\": 24, \"number\": 988495244},\n\t\"address\": {\n\t\t\"uf\": \"RJ\",\n\t\t\"city\": \"Petrópolis\",\n\t\t\"neighborhood\": \"Corrêas\",\n\t\t\"street\": \"Rua Antônio Flor da Silva\",\n\t\t\"number\": \"140\",\n\t\t\"reference\": \"Casa do formigão\",\n\t\t\"zipcode\": 25720300,\n\t\t\"latitude\": -22.439011,\n\t\t\"longitude\": -43.1311757\n\t}\n\t\n}"
+							"raw": "{\n\t\"full_name\": \"Luiz Carlos P. O. Junior\",\n\t\"email\": \"lcpojr@gmail.com\",\n\t\"password\": \"123456\",\n\t\"documents\": [\n\t\t{\"type\": \"cpf\", \"number\": \"12574623770\"}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{host}}/api/v1/profiles/",
@@ -113,7 +113,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "PolKQpedQKq3NFZIfUTXV39Vl7Wiwa",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
 									"type": "string"
 								}
 							]
@@ -182,7 +182,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "PzKxR9HtiW4tpUywtiATG6xz8wEPD8",
+									"value": "GjxsnRnwXggCabYKwMdef4ZycjbMnb",
 									"type": "string"
 								}
 							]
@@ -198,7 +198,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"full_name\": \"Luiz Carlos P. O. de Junior\",\n\t\"mothers_name\": \"Sandra Regina P. de Oliveira\",\n\t\"fathers_name\": \"Luiz Carlos P. de Oliveira\",\n\t\"birthdate\": \"1992-11-29\",\n\t\"document\": {\"type\": \"rg\", \"number\": \"256996463\"},\n\t\"phone\": {\"ddd\": 24, \"number\": 988495244},\n\t\"address\": {\n\t\t\"uf\": \"RJ\",\n\t\t\"city\": \"Petrópolis\",\n\t\t\"neighborhood\": \"Corrêas\",\n\t\t\"street\": \"Rua Antônio Flor da Silva\",\n\t\t\"number\": \"140\",\n\t\t\"reference\": \"Casa do formigão\",\n\t\t\"zipcode\": 25720300,\n\t\t\"latitude\": -22.439011,\n\t\t\"longitude\": -43.1311757\n\t}\n\t\n}"
+							"raw": "{\n\t\"full_name\": \"Luiz Carlos P. O. de Junior\",\n\t\"mothers_name\": \"Sandra Regina P. de Oliveira\",\n\t\"fathers_name\": \"Luiz Carlos P. de Oliveira\",\n\t\"birthdate\": \"1992-11-29\",\n\t\"documents\": [\n\t\t{\"type\": \"rg\", \"number\": \"256996463\"}\n\t],\n\t\"phones\": [\n\t\t{\"ddd\": 24, \"number\": 988495244}\n\t],\n\t\"addresses\": [\n\t\t{\n\t\t\t\"uf\": \"RJ\",\n\t\t\t\"city\": \"Petrópolis\",\n\t\t\t\"neighborhood\": \"Corrêas\",\n\t\t\t\"street\": \"Rua Antônio Flor da Silva\",\n\t\t\t\"number\": \"140\",\n\t\t\t\"reference\": \"Casa do formigão\",\n\t\t\t\"zipcode\": 25720300,\n\t\t\t\"latitude\": -22.439011,\n\t\t\t\"longitude\": -43.1311757\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{host}}/api/v1/profiles/{{uuid}}/",
@@ -229,7 +229,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "L6Q2TazVWLIavBg40kVguMDiNfDpaN",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
 									"type": "string"
 								}
 							]
@@ -389,7 +389,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "PolKQpedQKq3NFZIfUTXV39Vl7Wiwa",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
 									"type": "string"
 								}
 							]
@@ -405,7 +405,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Cerveja Itaipava Garrafa\",\n\t\"description\": \"Bebidas alcólica autêntica de Petrópolis\",\n\t\"purchase_price\": 5.99,\n\t\"sale_price\": 7.99,\n\t\"category\": \"61bbbc3b-5255-431a-aa55-e474d9843e81\"\n}"
+							"raw": "{\n\t\"name\": \"Cerveja Itaipava Garrafa\",\n\t\"description\": \"Bebidas alcólica autêntica de Petrópolis\",\n\t\"purchase_price\": 5.99,\n\t\"sale_price\": 7.99,\n\t\"category\": \"91998e26-c42b-4826-8e7f-aa35d192c7c4\"\n}"
 						},
 						"url": {
 							"raw": "{{host}}/api/v1/products/",
@@ -429,7 +429,14 @@
 					},
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [],
@@ -558,6 +565,315 @@
 								"v1",
 								"products",
 								"{{uuid}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sales",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"client\": \"87830c00-cfe6-4a24-a168-07f01ffa2542\",\n\t\"products\": [\n\t\t{\"item\": \"2db6fa47-c66a-44e6-bbb3-1a4c5d9db764\", \"quantity\": 2}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "ZscsnFtL52de3NTdWeAGcW9rAwwocy",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/list",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/{{uuid}}/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								"{{uuid}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"products\": [\n\t\t{\"item\": \"2db6fa47-c66a-44e6-bbb3-1a4c5d9db764\", \"quantity\": 2},\n\t\t{\"item\": \"083f2485-841e-4fcb-86fb-51e40ea432f0\", \"quantity\": 1}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/{{uuid}}/products/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								"{{uuid}}",
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/{{uuid}}/products/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								"{{uuid}}",
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Close",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "rgPsRBH97XQ2gE7jSVyd65RcwjYB7d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/{{uuid}}/close/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								"{{uuid}}",
+								"close",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "rgPsRBH97XQ2gE7jSVyd65RcwjYB7d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/{{uuid}}/cancelate/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								"{{uuid}}",
+								"cancelate",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pay",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "rgPsRBH97XQ2gE7jSVyd65RcwjYB7d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/{{uuid}}/pay/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								"{{uuid}}",
+								"pay",
 								""
 							]
 						}

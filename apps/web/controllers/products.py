@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import View
+from django.db import transaction
 
 from rest_framework.views import APIView
 from rest_framework import status
@@ -19,7 +20,6 @@ class CategoryCreate(APIView, ProtectedResourceView):
     * Requires authentication.
     * Only adminusers use.
     """
-    queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = (TokenMatchesOASRequirements,)
     required_alternate_scopes = {
@@ -33,26 +33,30 @@ class CategoryCreate(APIView, ProtectedResourceView):
         if request.user.is_admin:
             serializer = self.serializer_class(data=request.data)
             if serializer.is_valid():
-
                 # Getting serialized data
                 request_data = serializer.data
                 if not Category.objects.filter(name=request_data['name']):
-                    # Creating category
-                    category = Category()
-                    category.name = request_data['name']
+                    try:
+                        with transaction.atomic():
 
-                    if 'description' in request_data:
-                        category.description = request_data['description']
+                            # Creating category
+                            category = Category()
+                            category.name = request_data['name']
 
-                    category.save()
-                    return Response({"id": category.id}, status=status.HTTP_201_CREATED)
+                            if 'description' in request_data and request_data['description']:
+                                category.description = request_data['description']
+
+                            category.save()
+                            return Response({"id": category.id}, status=status.HTTP_201_CREATED)
+
+                    except Exception as e:
+                        return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                 else:
-                    return Response(status=status.HTTP_409_CONFLICT)
-
+                    return Response({"type": "category_already_exist"}, status=status.HTTP_409_CONFLICT)
             else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"type": "validation_error", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class CategoryList(APIView, ProtectedResourceView):
@@ -85,7 +89,7 @@ class CategoryList(APIView, ProtectedResourceView):
                 })
             return Response(response, status=status.HTTP_200_OK)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class CategoryUpdateDelete(APIView, ProtectedResourceView):
@@ -110,28 +114,32 @@ class CategoryUpdateDelete(APIView, ProtectedResourceView):
         try:
             category = Category.objects.get(pk=pk)
         except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response({"type": "not_found"}, status=status.HTTP_404_NOT_FOUND)
 
         if request.user.is_admin:
-
             serializer = self.serializer_class(data=request.data)
             if serializer.is_valid():
-                request_data = serializer.data  # Getting serialized data
+                try:
+                    # Getting serialized data
+                    request_data = serializer.data
+                    with transaction.atomic():
 
-                # Updating category
-                if 'name' in request_data:
-                    category.name = request_data['name']
+                        # Updating category
+                        if 'name' in request_data and request_data['name']:
+                            category.name = request_data['name']
 
-                if 'description' in request_data:
-                    category.description = request_data['description']
+                        if 'description' in request_data and request_data['description']:
+                            category.description = request_data['description']
 
-                category.save()
-                return Response({"id": category.id}, status=status.HTTP_200_OK)
+                        category.save()
+                        return Response({"id": category.id}, status=status.HTTP_200_OK)
+
+                except Exception as e:
+                    return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+                return Response({"type": "validation_error", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
 
     def delete(self, request, pk, format=None):
         """
@@ -140,13 +148,20 @@ class CategoryUpdateDelete(APIView, ProtectedResourceView):
         try:
             category = Category.objects.get(pk=pk)
         except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response({"type": "not_found"}, status=status.HTTP_404_NOT_FOUND)
 
         if request.user.is_admin:
-            category.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            try:
+                with transaction.atomic():
+
+                    # Deleting category
+                    category.delete()
+                    return Response(status=status.HTTP_204_NO_CONTENT)
+
+            except:
+                return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class ProductCreate(APIView, ProtectedResourceView):
@@ -169,38 +184,47 @@ class ProductCreate(APIView, ProtectedResourceView):
         if request.user.is_admin:
             serializer = self.serializer_class(data=request.data)
             if serializer.is_valid():
-
                 # Getting serialized data
                 request_data = serializer.data
                 if not Product.objects.filter(name=request_data['name']):
-                    # Creating product
-                    product = Product()
-                    product.name = request_data['name']
-                    product.category = Category.objects.get(
-                        pk=request_data['category'])
-                    product.purchase_price = request_data['purchase_price']
-                    product.sale_price = request_data['sale_price']
+                    try:
+                        with transaction.atomic():
 
-                    if 'description' in request_data:
-                        product.description = request_data['description']
+                            # Creating product
+                            product = Product()
+                            product.name = request_data['name']
+                            product.category = Category.objects.get(
+                                pk=request_data['category'])
+                            product.purchase_price = request_data['purchase_price']
+                            product.sale_price = request_data['sale_price']
 
-                    product.save()
-                    return Response({"id": product.id}, status=status.HTTP_201_CREATED)
+                            if 'description' in request_data and request_data['description']:
+                                product.description = request_data['description']
+
+                            product.save()
+                            return Response({"id": product.id}, status=status.HTTP_201_CREATED)
+
+                    except Exception as e:
+                        return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                 else:
-                    return Response(status=status.HTTP_409_CONFLICT)
-
+                    return Response({"type": "product_already_exist"}, status=status.HTTP_409_CONFLICT)
             else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"type": "validation_error", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class ProductList(APIView):
     """
     A view to list `Products`.
 
-    * Do not requires authentication.
+    * Requires authentication.
     """
+
+    permission_classes = (TokenMatchesOASRequirements,)
+    required_alternate_scopes = {
+        "GET": [['product:read']]
+    }
 
     def get(self, request, format=None):
         """
@@ -265,7 +289,7 @@ class ProductRetrieveUpdateDelete(APIView, ProtectedResourceView):
         try:
             product = Product.objects.get(pk=pk)
         except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response({"type": "not_found"}, status=status.HTTP_404_NOT_FOUND)
 
         if request.user.is_admin:
             # Parsing response
@@ -281,7 +305,7 @@ class ProductRetrieveUpdateDelete(APIView, ProtectedResourceView):
             }
             return Response(response, status=status.HTTP_200_OK)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
 
     def patch(self, request, pk, format=None):
         """
@@ -290,38 +314,43 @@ class ProductRetrieveUpdateDelete(APIView, ProtectedResourceView):
         try:
             product = Product.objects.get(pk=pk)
         except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response({"type": "not_found"}, status=status.HTTP_404_NOT_FOUND)
 
         if request.user.is_admin:
 
             serializer = self.serializer_class(data=request.data)
             if serializer.is_valid():
-                request_data = serializer.data  # Getting serialized data
+                # Getting serialized data
+                request_data = serializer.data
+                try:
+                    with transaction.atomic():
 
-                # Updating product
-                if 'name' in request_data:
-                    product.name = request_data['name']
+                        # Updating product
+                        if 'name' in request_data and request_data['name']:
+                            product.name = request_data['name']
 
-                if 'category' in request_data:
-                    product.category = Category.objects.get(
-                        pk=request_data['category'])
+                        if 'category' in request_data and request_data['category']:
+                            product.category = Category.objects.get(
+                                pk=request_data['category'])
 
-                if 'description' in request_data:
-                    product.description = request_data['description']
+                        if 'description' in request_data and request_data['description']:
+                            product.description = request_data['description']
 
-                if 'purchase_price' in request_data:
-                    product.purchase_price = request_data['purchase_price']
+                        if 'purchase_price' in request_data and request_data['purchase_price']:
+                            product.purchase_price = request_data['purchase_price']
 
-                if 'sale_price' in request_data:
-                    product.sale_price = request_data['sale_price']
+                        if 'sale_price' in request_data and request_data['sale_price']:
+                            product.sale_price = request_data['sale_price']
 
-                product.save()
-                return Response({"id": product.id}, status=status.HTTP_200_OK)
+                        product.save()
+                        return Response({"id": product.id}, status=status.HTTP_200_OK)
+
+                except Exception as e:
+                    return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+                return Response({"type": "validation_error", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
 
     def delete(self, request, pk, format=None):
         """
@@ -330,10 +359,17 @@ class ProductRetrieveUpdateDelete(APIView, ProtectedResourceView):
         try:
             product = Product.objects.get(pk=pk)
         except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response({"type": "not_found"}, status=status.HTTP_404_NOT_FOUND)
 
         if request.user.is_admin:
-            product.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            try:
+                with transaction.atomic():
+
+                    # Deleting product
+                    product.delete()
+                    return Response(status=status.HTTP_204_NO_CONTENT)
+
+            except Exception as e:
+                return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
