@@ -46,16 +46,11 @@ class CreateSerializer(serializers.ModelSerializer):
         max_length=50, style={'input_type': 'password'})
 
     # Profile extra fields
-    addresses = AddressSerializer(many=True, required=False)
-    phones = PhoneSerializer(many=True, required=False)
     documents = DocumentSerializer(many=True, required=True)
 
     class Meta:
         model = Profile
-        fields = (
-            'full_name', 'mothers_name', 'fathers_name', 'birthdate',
-            'email', 'password', 'addresses', 'phones', 'documents',
-        )
+        fields = ('full_name', 'email', 'password', 'documents')
 
 
 class UpdateSerializer(serializers.ModelSerializer):
@@ -71,5 +66,5 @@ class UpdateSerializer(serializers.ModelSerializer):
         model = Profile
         fields = (
             'full_name', 'mothers_name', 'fathers_name',
-            'birthdate', 'addresses', 'phones', 'documents',
+            'birthdate', 'addresses', 'phones', 'documents'
         )

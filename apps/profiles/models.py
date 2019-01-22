@@ -24,7 +24,7 @@ class Profile(models.Model):
     phones = pg.JSONField(default=list)
     addresses = pg.JSONField(default=list)
     documents = pg.JSONField(default=list)
-    birthdate = models.DateField()
+    birthdate = models.DateField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
