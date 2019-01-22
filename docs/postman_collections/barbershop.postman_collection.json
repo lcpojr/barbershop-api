@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8316f454-8948-4b5b-9e39-78f36719cc87",
+		"_postman_id": "2bd91f1e-01e3-4a4f-94a4-67fa30178587",
 		"name": "barbershop",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -25,22 +25,22 @@
 							"urlencoded": [
 								{
 									"key": "client_id",
-									"value": "Q9JnHIcApD0kTv6J0LepiXIH5X6i9ECrmMCbhiD4",
+									"value": "tpOVjNi38NmTl6siWed7rX8FRyWcsTCB1kvsBnl1",
 									"type": "text"
 								},
 								{
 									"key": "client_secret",
-									"value": "bpFES9nmQZa4dnxuwObRlpsVuRjb5xScPGWwd4sc8rCirMHQXYZQM7iYyxAkg11OUoMbe1qnjGlNPvviMGQHj4DX9PrpG9wtkuKcO6hegCKnYU6P4FuNAhueZaWLMXBj",
+									"value": "hABYmKxspM2Be1LFR4ohMwH8VtEtsBVbKf2AtBplF3G9LW4w6PVzKf8RSAZe6h8aGwjDbi90iWGwJZy6iUGm25lgMqLwKRyAtrp9Qk8EADB3sfO9xUDYIobe0vlTpqUF",
 									"type": "text"
 								},
 								{
 									"key": "username",
-									"value": "i3l@admin.com",
+									"value": "lcpojr@gmail.com",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "admini3l@123",
+									"value": "123456",
 									"type": "text"
 								},
 								{
@@ -85,7 +85,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"full_name\": \"Luiz Carlos P. O. de Junior\",\n\t\"mothers_name\": \"Sandra Regina P. de Oliveira\",\n\t\"fathers_name\": \"Luiz Carlos P. de Oliveira\",\n\t\"birthdate\": \"1992-11-29\",\n\t\"email\": \"lcpojr@gmail.com\",\n\t\"password\": \"290408jr\",\n\t\"document\": {\"type\": \"cpf\", \"number\": \"12574623770\"},\n\t\"phone\": {\"ddd\": 24, \"number\": 988495244},\n\t\"address\": {\n\t\t\"uf\": \"RJ\",\n\t\t\"city\": \"Petrópolis\",\n\t\t\"neighborhood\": \"Corrêas\",\n\t\t\"street\": \"Rua Antônio Flor da Silva\",\n\t\t\"number\": \"140\",\n\t\t\"reference\": \"Casa do formigão\",\n\t\t\"zipcode\": 25720300,\n\t\t\"latitude\": -22.439011,\n\t\t\"longitude\": -43.1311757\n\t}\n\t\n}"
+							"raw": "{\n\t\"full_name\": \"Luiz Carlos P. O\",\n\t\"email\": \"lcpojr@gmail.com\",\n\t\"password\": \"123456\",\n\t\"documents\": [\n\t\t{\"type\": \"cpf\", \"number\": \"12574623770\"}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{host}}/api/v1/profiles/",
@@ -113,7 +113,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "PolKQpedQKq3NFZIfUTXV39Vl7Wiwa",
+									"value": "EIqY6DIxe4shmkjySsGF93kS0likO3",
 									"type": "string"
 								}
 							]
@@ -182,7 +182,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "PzKxR9HtiW4tpUywtiATG6xz8wEPD8",
+									"value": "GjxsnRnwXggCabYKwMdef4ZycjbMnb",
 									"type": "string"
 								}
 							]
@@ -198,7 +198,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"full_name\": \"Luiz Carlos P. O. de Junior\",\n\t\"mothers_name\": \"Sandra Regina P. de Oliveira\",\n\t\"fathers_name\": \"Luiz Carlos P. de Oliveira\",\n\t\"birthdate\": \"1992-11-29\",\n\t\"document\": {\"type\": \"rg\", \"number\": \"256996463\"},\n\t\"phone\": {\"ddd\": 24, \"number\": 988495244},\n\t\"address\": {\n\t\t\"uf\": \"RJ\",\n\t\t\"city\": \"Petrópolis\",\n\t\t\"neighborhood\": \"Corrêas\",\n\t\t\"street\": \"Rua Antônio Flor da Silva\",\n\t\t\"number\": \"140\",\n\t\t\"reference\": \"Casa do formigão\",\n\t\t\"zipcode\": 25720300,\n\t\t\"latitude\": -22.439011,\n\t\t\"longitude\": -43.1311757\n\t}\n\t\n}"
+							"raw": "{\n\t\"full_name\": \"Luiz Carlos P. O. de Junior\",\n\t\"mothers_name\": \"Sandra Regina P. de Oliveira\",\n\t\"fathers_name\": \"Luiz Carlos P. de Oliveira\",\n\t\"birthdate\": \"1992-11-29\",\n\t\"documents\": [\n\t\t{\"type\": \"rg\", \"number\": \"256996463\"}\n\t],\n\t\"phones\": [\n\t\t{\"ddd\": 24, \"number\": 988495244}\n\t],\n\t\"addresses\": [\n\t\t{\n\t\t\t\"uf\": \"RJ\",\n\t\t\t\"city\": \"Petrópolis\",\n\t\t\t\"neighborhood\": \"Corrêas\",\n\t\t\t\"street\": \"Rua Antônio Flor da Silva\",\n\t\t\t\"number\": \"140\",\n\t\t\t\"reference\": \"Casa do formigão\",\n\t\t\t\"zipcode\": 25720300,\n\t\t\t\"latitude\": -22.439011,\n\t\t\t\"longitude\": -43.1311757\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{host}}/api/v1/profiles/{{uuid}}/",
@@ -429,7 +429,14 @@
 					},
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "xBXLqftxf0Aox3s9jmNdSs2wCkeHji",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [],
@@ -558,6 +565,154 @@
 								"v1",
 								"products",
 								"{{uuid}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sales",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"client\": \"20734c98-4080-4f15-a3a0-1a7df3a5ef0a\",\n\t\"products\": [\n\t\t{\"item\": \"20734c98-4080-4f15-a3a0-1a7df3a5ef0a\", \"quantity\": 2}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "ZscsnFtL52de3NTdWeAGcW9rAwwocy",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/list",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "CCjv6a0q9aRSaJ7XBAwXTgUj20rfKX",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/{{uuid}}/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								"{{uuid}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "IetSWSFiqS4I2q5n1rYiqZBIYAA4wo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"products\": [\n\t\t{\"item\": \"537cbf13-f6e8-49bb-b19a-a09d88c2c106\", \"quantity\": 3},\n\t\t{\"item\": \"fa60f203-8e01-4bc0-942c-fd9e04906dfd\", \"quantity\": 1}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sales/{{uuid}}/products/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sales",
+								"{{uuid}}",
+								"products",
 								""
 							]
 						}
