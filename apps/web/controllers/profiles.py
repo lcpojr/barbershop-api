@@ -42,7 +42,8 @@ class ProfileCreate(APIView):
                         # Creating profile
                         profile = Profile()
                         profile.user = user
-                        profile.full_name = request_data['full_name']
+                        profile.first_name = request_data['first_name']
+                        profile.last_name = request_data['last_name']
                         profile.documents = request_data['documents']
 
                         profile.save()
@@ -81,7 +82,8 @@ class ProfileList(APIView, ProtectedResourceView):
             for profile in profiles:
                 response.append({
                     "id": profile.id,
-                    "full_name": profile.full_name,
+                    "first_name": profile.first_name,
+                    "last_name": profile.last_name,
                     "email": profile.user.email,
                     "is_active": profile.user.is_active,
                 })
@@ -90,12 +92,120 @@ class ProfileList(APIView, ProtectedResourceView):
             return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
+class ProfileMe(APIView, ProtectedResourceView):
+    """
+    A view to update and retrieve a `Profile`.
+
+    * Requires authentication.
+    * Only the profile itself can use
+    """
+
+    serializer_class = UpdateSerializer
+    permission_classes = (TokenMatchesOASRequirements,)
+    required_alternate_scopes = {
+        "GET": [['profile:read']],
+        "PATCH": [['profile:write']]
+    }
+
+    def get(self, request, format=None):
+        """
+        Retrieves a logged profile
+        """
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except:
+            return Response({"type": "not_found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Parsing response
+        response = {
+            "id": profile.id,
+            "first_name": profile.first_name,
+            "last_name": profile.last_name,
+            "mothers_name": profile.mothers_name,
+            "fathers_name": profile.fathers_name,
+            "phones": profile.phones,
+            "addresses": profile.addresses,
+            "documents": profile.documents,
+            "birthdate": profile.birthdate,
+            "email": profile.user.email,
+            "created_at": profile.created_at,
+            "updated_at": profile.created_at,
+            "is_active": profile.user.is_active,
+            "is_staff": profile.user.is_staff,
+            "is_admin": profile.user.is_admin
+        }
+        return Response(response, status=status.HTTP_200_OK)
+
+    def patch(self, request, format=None):
+        """
+        Updates the logged profile
+        """
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except:
+            return Response({"type": "not_found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            try:
+                # Getting serialized data
+                request_data = serializer.data
+                with transaction.atomic():
+
+                    # Updating profile
+                    if 'first_name' in request_data and request_data['first_name']:
+                        profile.first_name = request_data['first_name']
+
+                    if 'last_name' in request_data and request_data['last_name']:
+                        profile.last_name = request_data['last_name']
+
+                    if 'birthdate' in request_data and request_data['birthdate']:
+                        profile.birthdate = request_data['birthdate']
+
+                    if 'mothers_name' in request_data and request_data['mothers_name']:
+                        profile.mothers_name = request_data['mothers_name']
+
+                    if 'fathers_name' in request_data and request_data['fathers_name']:
+                        profile.fathers_name = request_data['fathers_name']
+
+                    if 'phones' in request_data and request_data['phones']:
+                        profile.phones = request_data['phones']
+
+                    if 'addresses' in request_data and request_data['addresses']:
+                        profile.addresses = request_data['addresses']
+
+                    if 'documents' in request_data and request_data['documents']:
+                        profile.documents = request_data['documents']
+
+                    if request.user.is_admin:
+                        if 'is_staff' in request_data and request_data['is_staff']:
+                            profile.user.is_staff = request_data['is_staff']
+
+                        if 'is_admin' in request_data and request_data['is_admin']:
+                            # Admins are also staff users
+                            profile.user.is_staff = request_data['is_admin']
+                            profile.user.is_admin = request_data['is_admin']
+
+                        if 'is_active' in request_data and request_data['is_active']:
+                            profile.user.is_active = request_data['is_active']
+
+                        request.user.save()
+
+                    profile.save()
+                    return Response({"id": profile.id}, status=status.HTTP_200_OK)
+
+            except Exception as e:
+                return Response({"type": "internal_server_error", "detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response({"type": "validation_error", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
 class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
     """
     A view to update and retrieve a `Profile`.
 
     * Requires authentication.
-    * Only staffusers and the profile itself can use
+    * Only staffusers can use.
     """
 
     serializer_class = UpdateSerializer
@@ -114,11 +224,12 @@ class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
         except:
             return Response({"type": "not_found"}, status=status.HTTP_404_NOT_FOUND)
 
-        if request.user.is_staff or request.user == profile.user:
+        if request.user.is_staff:
             # Parsing response
             response = {
                 "id": profile.id,
-                "full_name": profile.full_name,
+                "first_name": profile.first_name,
+                "last_name": profile.last_name,
                 "mothers_name": profile.mothers_name,
                 "fathers_name": profile.fathers_name,
                 "phones": profile.phones,
@@ -154,8 +265,11 @@ class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
                     with transaction.atomic():
 
                         # Updating profile
-                        if 'full_name' in request_data and request_data['full_name']:
-                            profile.full_name = request_data['full_name']
+                        if 'first_name' in request_data and request_data['first_name']:
+                            profile.first_name = request_data['first_name']
+
+                        if 'last_name' in request_data and request_data['last_name']:
+                            profile.last_name = request_data['last_name']
 
                         if 'birthdate' in request_data and request_data['birthdate']:
                             profile.birthdate = request_data['birthdate']
@@ -174,6 +288,20 @@ class ProfileRetrieveUpdate(APIView, ProtectedResourceView):
 
                         if 'documents' in request_data and request_data['documents']:
                             profile.documents = request_data['documents']
+
+                        if request.user.is_admin:
+                            if 'is_staff' in request_data and request_data['is_staff']:
+                                profile.user.is_staff = request_data['is_staff']
+
+                            if 'is_admin' in request_data and request_data['is_admin']:
+                                # Admins are also staff users
+                                profile.user.is_staff = request_data['is_admin']
+                                profile.user.is_admin = request_data['is_admin']
+
+                            if 'is_active' in request_data and request_data['is_active']:
+                                profile.user.is_active = request_data['is_active']
+
+                            request.user.save()
 
                         profile.save()
                         return Response({"id": profile.id}, status=status.HTTP_200_OK)

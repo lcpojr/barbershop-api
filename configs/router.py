@@ -18,6 +18,8 @@ urlpatterns = [
     # Profiles urls
     path('api/v1/profiles/', profiles.ProfileCreate.as_view(),
          name='profile_create'),
+    path('api/v1/profiles/me', profiles.ProfileMe.as_view(),
+         name='profile_me'),
     path('api/v1/profiles/list/', profiles.ProfileList.as_view(),
          name='profile_list'),
     path('api/v1/profiles/<uuid:pk>/', profiles.ProfileRetrieveUpdate.as_view(),

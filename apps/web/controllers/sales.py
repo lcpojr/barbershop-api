@@ -30,19 +30,19 @@ class SaleCreate(APIView, ProtectedResourceView):
         """
         Creates a new sale
         """
-        if request.user.is_staff or request.user == request.data['client']:
+        client = Profile.objects.get(pk=request.data['client'])
+        if request.user.is_staff or request.user == client.user:
             serializer = self.serializer_class(data=request.data)
             if serializer.is_valid():
                 # Getting serialized data
                 request_data = serializer.data
-                if not Sale.objects.filter(client=request_data['client'], status="open"):
+                if not Sale.objects.filter(client=client, status="open"):
                     try:
                         with transaction.atomic():
 
                             # Creating sale
                             sale = Sale()
-                            sale.client = Profile.objects.get(
-                                pk=request_data['client'])
+                            sale.client = client
                             sale.status = 'open'
 
                             if 'employe' in request_data and request_data['employe']:
@@ -78,7 +78,6 @@ class SaleList(APIView, ProtectedResourceView):
     A view to list `Sales`.
 
     * Requires authentication.
-    * Only staffusers can use.
     """
     permission_classes = (TokenMatchesOASRequirements,)
     required_alternate_scopes = {
@@ -97,7 +96,7 @@ class SaleList(APIView, ProtectedResourceView):
             for sale in sales:
                 response.append({
                     "id": sale.id,
-                    "client": sale.client.full_name,
+                    "client": sale.client.id,
                     "total": sale.get_total(),
                     "status": sale.status,
                     "created_at": sale.created_at,
@@ -105,7 +104,18 @@ class SaleList(APIView, ProtectedResourceView):
                 })
             return Response(response, status=status.HTTP_200_OK)
         else:
-            return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+            sales = Sale.objects.filter(client__user=request.user)
+
+            response = []
+            for sale in sales:
+                response.append({
+                    "id": sale.id,
+                    "total": sale.get_total(),
+                    "status": sale.status,
+                    "created_at": sale.created_at,
+                    "updated_at": sale.updated_at
+                })
+            return Response(response, status=status.HTTP_200_OK)
 
 
 class SaleRetrieve(APIView, ProtectedResourceView):
@@ -113,7 +123,6 @@ class SaleRetrieve(APIView, ProtectedResourceView):
     A view to update and retrieve a `Sale`.
 
     * Requires authentication.
-    * Only staffusers and the profile itself can use
     """
     permission_classes = (TokenMatchesOASRequirements,)
     required_alternate_scopes = {
@@ -138,7 +147,7 @@ class SaleRetrieve(APIView, ProtectedResourceView):
                 total += subtotal
 
                 products.append({
-                    "id": product_item.id,
+                    "id": product_item.item.id,
                     "name": product_item.item.name,
                     "price": product_item.item.sale_price,
                     "quantity": product_item.quantity,
@@ -147,8 +156,8 @@ class SaleRetrieve(APIView, ProtectedResourceView):
 
             response = {
                 "id": sale.id,
-                "client": sale.get_client_name(),
-                "employe": sale.get_employe_name(),
+                "client": sale.get_client(),
+                "employe": sale.get_employe(),
                 "products": products,
                 "total": sale.get_total(),
                 "status": sale.status,
