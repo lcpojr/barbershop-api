@@ -25,22 +25,22 @@
 							"urlencoded": [
 								{
 									"key": "client_id",
-									"value": "OuN4FuDSjd4DwfL1AokkrydMXTYzLxLAMb1H3koR",
+									"value": "eEc6N9lYf4AtzGpsvfjgB39LDxD4xmMof5KqWucd",
 									"type": "text"
 								},
 								{
 									"key": "client_secret",
-									"value": "1ru3x9GQ92RLc1OyYVJdVuPXdVsGjnijhMmzD0ZYCDr8B5SJghabYyEnjFceH3MmRNiP2Vy3HJ3iNp2c0gdIFqXrf8LAZJWpZy76JS09e4HEBnByVfAUyD6VfqMZdZ7i",
+									"value": "JKzTL3EWKDk7YiP9XTNj1rAxms1AZcVyEDB3ddPNLMxvEd8Z7vZt6G6hCi1zWd6tjVOIBW9aqWEz7aMTHhw13FQiCi2XkhEQ0gesK7PDaDJP12qblPciNIM44FxZ59Ji",
 									"type": "text"
 								},
 								{
 									"key": "username",
-									"value": "admin@i3l.com",
+									"value": "i3l@admin.com",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "i3ladmin@123",
+									"value": "admin",
 									"type": "text"
 								},
 								{
@@ -85,7 +85,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"full_name\": \"Luiz Carlos P. O. Junior\",\n\t\"email\": \"lcpojr@gmail.com\",\n\t\"password\": \"123456\",\n\t\"documents\": [\n\t\t{\"type\": \"cpf\", \"number\": \"12574623770\"}\n\t]\n}"
+							"raw": "{\n\t\"first_name\": \"Luiz Carlos\",\n\t\"last_name\": \"Pires de Oliveira Junior\",\n\t\"email\": \"lcpojr@gmail.com\",\n\t\"password\": \"123456\",\n\t\"documents\": [\n\t\t{\"type\": \"cpf\", \"number\": \"12574623770\"}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{host}}/api/v1/profiles/",
@@ -147,7 +147,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "PzKxR9HtiW4tpUywtiATG6xz8wEPD8",
+									"value": "lbbFQKCBhVXkvFXfW5pQe7EPFrYFKi",
 									"type": "string"
 								}
 							]
@@ -169,6 +169,47 @@
 								"profiles",
 								"{{uuid}}",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "lbbFQKCBhVXkvFXfW5pQe7EPFrYFKi",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/profiles/me",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles",
+								"me"
 							]
 						}
 					},
@@ -215,6 +256,47 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Update Me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "lbbFQKCBhVXkvFXfW5pQe7EPFrYFKi",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"first_name\": \"Luiz Carlos\",\n\t\"last_name\": \"Pires de O. Jr\",\n\t\"mothers_name\": \"Sandra Regina P. de Oliveira\",\n\t\"fathers_name\": \"Luiz Carlos P. de Oliveira\",\n\t\"birthdate\": \"1992-11-29\",\n\t\"is_active\": true,\n\t\"is_staff\": true,\n\t\"is_admin\": true,\n\t\"documents\": [\n\t\t{\"type\": \"rg\", \"number\": \"256996463\"}\n\t],\n\t\"phones\": [\n\t\t{\"ddd\": 24, \"number\": 988495244}\n\t],\n\t\"addresses\": [\n\t\t{\n\t\t\t\"uf\": \"RJ\",\n\t\t\t\"city\": \"Petrópolis\",\n\t\t\t\"neighborhood\": \"Corrêas\",\n\t\t\t\"street\": \"Rua Antônio Flor da Silva\",\n\t\t\t\"number\": \"140\",\n\t\t\t\"reference\": \"Casa do formigão\",\n\t\t\t\"zipcode\": 25720300,\n\t\t\t\"latitude\": -22.439011,\n\t\t\t\"longitude\": -43.1311757\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/profiles/me",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles",
+								"me"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -229,7 +311,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
+									"value": "Cvxh97lbJ0ZZq8ew05yQDtqOKbShvi",
 									"type": "string"
 								}
 							]
@@ -389,7 +471,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
+									"value": "Cvxh97lbJ0ZZq8ew05yQDtqOKbShvi",
 									"type": "string"
 								}
 							]
@@ -405,7 +487,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Cerveja Itaipava Garrafa\",\n\t\"description\": \"Bebidas alcólica autêntica de Petrópolis\",\n\t\"purchase_price\": 5.99,\n\t\"sale_price\": 7.99,\n\t\"category\": \"91998e26-c42b-4826-8e7f-aa35d192c7c4\"\n}"
+							"raw": "{\n\t\"name\": \"Cerveja Itaipava Garrafa\",\n\t\"description\": \"Bebidas alcólica autêntica de Petrópolis\",\n\t\"purchase_price\": 5.99,\n\t\"sale_price\": 7.99,\n\t\"category\": \"0417cf17-53b8-4a7a-8e6c-45698de18d12\"\n}"
 						},
 						"url": {
 							"raw": "{{host}}/api/v1/products/",
@@ -433,7 +515,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
+									"value": "lbbFQKCBhVXkvFXfW5pQe7EPFrYFKi",
 									"type": "string"
 								}
 							]
@@ -544,7 +626,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "PolKQpedQKq3NFZIfUTXV39Vl7Wiwa",
+									"value": "lbbFQKCBhVXkvFXfW5pQe7EPFrYFKi",
 									"type": "string"
 								}
 							]
@@ -584,7 +666,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
+									"value": "lbbFQKCBhVXkvFXfW5pQe7EPFrYFKi",
 									"type": "string"
 								}
 							]
@@ -600,7 +682,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\": \"87830c00-cfe6-4a24-a168-07f01ffa2542\",\n\t\"products\": [\n\t\t{\"item\": \"2db6fa47-c66a-44e6-bbb3-1a4c5d9db764\", \"quantity\": 2}\n\t]\n}"
+							"raw": "{\n\t\"client\": \"501f7716-d0fd-431b-925c-05a311e683d9\",\n\t\"products\": [\n\t\t{\"item\": \"a052298d-14f8-48da-9542-55dc9ab57129\", \"quantity\": 2}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{host}}/api/v1/sales/",
@@ -625,7 +707,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "ZscsnFtL52de3NTdWeAGcW9rAwwocy",
+									"value": "lbbFQKCBhVXkvFXfW5pQe7EPFrYFKi",
 									"type": "string"
 								}
 							]
@@ -694,7 +776,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
+									"value": "lbbFQKCBhVXkvFXfW5pQe7EPFrYFKi",
 									"type": "string"
 								}
 							]
@@ -710,7 +792,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"products\": [\n\t\t{\"item\": \"2db6fa47-c66a-44e6-bbb3-1a4c5d9db764\", \"quantity\": 2},\n\t\t{\"item\": \"083f2485-841e-4fcb-86fb-51e40ea432f0\", \"quantity\": 1}\n\t]\n}"
+							"raw": "{\n\t\"products\": [\n\t\t{\"item\": \"a052298d-14f8-48da-9542-55dc9ab57129\", \"quantity\": 1}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{host}}/api/v1/sales/{{uuid}}/products/",
@@ -737,7 +819,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "knVN6ngvx14DpYzLjXGjkDtl9c8Yp7",
+									"value": "lbbFQKCBhVXkvFXfW5pQe7EPFrYFKi",
 									"type": "string"
 								}
 							]
@@ -753,7 +835,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n\t\"products\": [\n\t\t{\"item\": \"a052298d-14f8-48da-9542-55dc9ab57129\"}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{host}}/api/v1/sales/{{uuid}}/products/",

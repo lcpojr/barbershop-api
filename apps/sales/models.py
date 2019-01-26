@@ -38,14 +38,14 @@ class Sale(models.Model):
         verbose_name_plural = 'Sales'
 
     def __str__(self):
-        return "{} ({}) - R$ {}".format(self.client.full_name, self.updated_at, self.get_total())
+        return "{} ({}) - R$ {}".format(self.client.first_name, self.updated_at, self.get_total())
 
-    def get_client_name(self):
-        return self.client.full_name
+    def get_client(self):
+        return self.client.id
 
-    def get_employe_name(self):
+    def get_employe(self):
         if self.employe:
-            return self.employe.full_name
+            return self.employe.id
         else:
             return None
 

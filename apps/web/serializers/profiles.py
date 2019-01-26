@@ -50,7 +50,7 @@ class CreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('full_name', 'email', 'password', 'documents')
+        fields = ('first_name', 'last_name', 'email', 'password', 'documents')
 
 
 class UpdateSerializer(serializers.ModelSerializer):
@@ -61,10 +61,14 @@ class UpdateSerializer(serializers.ModelSerializer):
     addresses = AddressSerializer(many=True, required=False)
     phones = PhoneSerializer(many=True, required=False)
     documents = DocumentSerializer(many=True, required=False)
+    is_staff = serializers.BooleanField(required=False)
+    is_admin = serializers.BooleanField(required=False)
+    is_active = serializers.BooleanField(required=False)
 
     class Meta:
         model = Profile
         fields = (
-            'full_name', 'mothers_name', 'fathers_name',
-            'birthdate', 'addresses', 'phones', 'documents'
+            'first_name', 'last_name', 'mothers_name', 'fathers_name',
+            'birthdate', 'addresses', 'phones', 'documents', 'is_staff',
+            'is_admin', 'is_active'
         )

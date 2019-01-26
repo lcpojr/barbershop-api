@@ -16,7 +16,8 @@ class Profile(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=150, verbose_name='Full Name')
+    first_name = models.CharField(max_length=150, verbose_name='First Name')
+    last_name = models.CharField(max_length=150, verbose_name='Last Name')
     mothers_name = models.CharField(
         max_length=150, verbose_name="Mother's Name", null=True)
     fathers_name = models.CharField(
@@ -32,7 +33,10 @@ class Profile(models.Model):
         verbose_name_plural = 'Profiles'
 
     def __str__(self):
-        return self.full_name
+        return self.first_name
+
+    def get_full_name(self):
+        return "{} {}".format(self.first_name, self.last_name)
 
     def get_age(self):
         return timezone.now().year - self.birthdate.year

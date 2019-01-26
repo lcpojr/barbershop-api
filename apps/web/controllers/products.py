@@ -304,6 +304,16 @@ class ProductRetrieveUpdateDelete(APIView, ProtectedResourceView):
                 "updated_at": product.updated_at
             }
             return Response(response, status=status.HTTP_200_OK)
+        elif request.user:
+            # Parsing response
+            response = {
+                "id": product.id,
+                "name": product.name,
+                "category": product.category.name,
+                "description": product.description,
+                "sale_price": product.sale_price
+            }
+            return Response(response, status=status.HTTP_200_OK)
         else:
             return Response({"type": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
 
