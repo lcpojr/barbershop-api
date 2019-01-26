@@ -1,0 +1,10 @@
+{% load qr_code %}
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>QRCode</title>
+    </head>
+    <body>
+        {% qr_from_text service.id size="S" image_format="png" error_correction="L" %}
+    </body>
+</html>
