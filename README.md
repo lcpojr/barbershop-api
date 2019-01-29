@@ -1,7 +1,7 @@
-# Barbershop Web
+# Barbershop Rest
 
 The objective of this application is to provide a service to be used in self attendance projects.
-This project will contain all the auth service and the rest API to be used by mobile apps.
+This project will contain all the auth service and the rest API to be used by mobile and frontend apps.
 
 ## Requirements
 
